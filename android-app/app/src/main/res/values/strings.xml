@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Adham AgriTech</string>
+    <string name="app_description">نظام الزراعة الذكية مع مراقبة الأقمار الصناعية</string>
+    <string name="enter_app">ابدأ الآن</string>
+    <string name="about_app">حول التطبيق</string>
+    <string name="loading">جاري التحميل...</string>
+    <string name="error_loading">خطأ في تحميل الصفحة</string>
+    <string name="retry">إعادة المحاولة</string>
+</resources>
