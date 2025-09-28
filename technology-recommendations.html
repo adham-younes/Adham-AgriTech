@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham AgriTech - توصيات التقنيات المتقدمة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .tech-category { border-right: 4px solid; }
+        .ai-ml { border-color: #8b5cf6; background: linear-gradient(135deg, #f3e8ff 0%, #ede9fe 100%); }
+        .iot { border-color: #3b82f6; background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%); }
+        .satellite { border-color: #10b981; background: linear-gradient(135deg, #d1fae5 0%, #dcfce7 100%); }
+        .robotics { border-color: #f59e0b; background: linear-gradient(135deg, #fef3c7 0%, #fef7cd 100%); }
+        .climate { border-color: #ef4444; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); }
+        .priority-high { border: 2px solid #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .priority-medium { border: 2px solid #f59e0b; background: rgba(245, 158, 11, 0.1); }
+        .priority-low { border: 2px solid #10b981; background: rgba(16, 185, 129, 0.1); }
+        .implementation-easy { color: #10b981; }
+        .implementation-medium { color: #f59e0b; }
+        .implementation-hard { color: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-2 ml-4">
+                        <span class="text-2xl font-bold text-blue-600">A</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">توصيات التقنيات المتقدمة</h1>
+                        <p class="text-blue-100">قاعدة بيانات شاملة للتقنيات والمستودعات المتقدمة</p>
+                    </div>
+                </div>
+                <div class="text-sm">
+                    <span class="bg-green-500 px-3 py-1 rounded-full">📊 تم التحليل</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Overview -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 نظرة عامة على التوصيات</h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="text-center p-4 bg-purple-50 rounded-lg">
+                    <div class="text-2xl font-bold text-purple-600">25</div>
+                    <div class="text-sm text-gray-600">تقنية AI/ML</div>
+                </div>
+                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                    <div class="text-2xl font-bold text-blue-600">18</div>
+                    <div class="text-sm text-gray-600">حلول IoT</div>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-lg">
+                    <div class="text-2xl font-bold text-green-600">12</div>
+                    <div class="text-sm text-gray-600">تقنيات الأقمار الصناعية</div>
+                </div>
+                <div class="text-center p-4 bg-orange-50 rounded-lg">
+                    <div class="text-2xl font-bold text-orange-600">8</div>
+                    <div class="text-sm text-gray-600">روبوتات زراعية</div>
+                </div>
+                <div class="text-center p-4 bg-red-50 rounded-lg">
+                    <div class="text-2xl font-bold text-red-600">15</div>
+                    <div class="text-sm text-gray-600">تقنيات المناخ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Technologies -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🎯 التقنيات عالية الأولوية</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- High Priority 1 -->
+                <div class="priority-high p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">🧠 YOLOv8 - كشف الأمراض النباتية</h3>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">أولوية عالية</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">نموذج متقدم للرؤية الحاسوبية لكشف وتصنيف أمراض النباتات في الوقت الفعلي</p>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <span class="text-sm text-gray-500">صعوبة التنفيذ:</span>
+                            <span class="implementation-medium font-semibold">متوسطة</span>
+                        </div>
+                        <div>
+                            <span class="text-sm text-gray-500">التأثير المتوقع:</span>
+                            <span class="text-red-600 font-semibold">عالي جداً</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg">
+                        <h4 class="font-semibold mb-2">الميزات:</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• دقة كشف تصل إلى 95%</li>
+                            <li>• سرعة معالجة عالية (>30 FPS)</li>
+                            <li>• يدعم أكثر من 100 نوع من الأمراض</li>
+                            <li>• يعمل على الهواتف المحمولة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- High Priority 2 -->
+                <div class="priority-high p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">🛰️ Sentinel Hub API</h3>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">أولوية عالية</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">API متقدم للوصول لصور الأقمار الصناعية مع معالجة متقدمة</p>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <span class="text-sm text-gray-500">صعوبة التنفيذ:</span>
+                            <span class="implementation-easy font-semibold">سهلة</span>
+                        </div>
+                        <div>
+                            <span class="text-sm text-gray-500">التأثير المتوقع:</span>
+                            <span class="text-red-600 font-semibold">عالي جداً</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg">
+                        <h4 class="font-semibold mb-2">الميزات:</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• صور عالية الدقة (10m-60m)</li>
+                            <li>• تحديث كل 5 أيام</li>
+                            <li>• معالجة سحابية متقدمة</li>
+                            <li>• حساب NDVI تلقائياً</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI/ML Technologies -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🤖 تقنيات الذكاء الاصطناعي والتعلم الآلي</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- PyTorch Computer Vision -->
+                <div class="tech-category ai-ml p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">PyTorch Vision</h3>
+                        <span class="text-2xl">🔬</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">مكتبة رؤية حاسوبية متقدمة لتحليل صور المحاصيل</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TensorFlow Lite -->
+                <div class="tech-category ai-ml p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">TensorFlow Lite</h3>
+                        <span class="text-2xl">📱</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">نشر نماذج AI على الأجهزة المحمولة</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OpenCV -->
+                <div class="tech-category ai-ml p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">OpenCV</h3>
+                        <span class="text-2xl">👁️</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">معالجة الصور والرؤية الحاسوبية</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-orange-600 font-semibold">متوسطة</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-blue-600 font-semibold">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- scikit-learn -->
+                <div class="tech-category ai-ml p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">scikit-learn</h3>
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">خوارزميات التعلم الآلي للتنبؤات</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-orange-600 font-semibold">متوسطة</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-blue-600 font-semibold">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- XGBoost -->
+                <div class="tech-category ai-ml p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">XGBoost</h3>
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">نماذج متقدمة لتوقع الإنتاج</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LSTM Networks -->
+                <div class="tech-category ai-ml p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">LSTM Networks</h3>
+                        <span class="text-2xl">🧠</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">شبكات عصبية للتنبؤ الزمني</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-hard font-semibold">صعب</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي جداً</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IoT Technologies -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">📡 تقنيات إنترنت الأشياء (IoT)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Arduino IoT Cloud -->
+                <div class="tech-category iot p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">Arduino IoT Cloud</h3>
+                        <span class="text-2xl">🔧</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">منصة IoT سهلة للمبتدئين</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-orange-600 font-semibold">متوسطة</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-blue-600 font-semibold">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ThingSpeak -->
+                <div class="tech-category iot p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">ThingSpeak</h3>
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">تحليل وتصور بيانات IoT</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LoRaWAN -->
+                <div class="tech-category iot p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">LoRaWAN</h3>
+                        <span class="text-2xl">📶</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">شبكة واسعة المدى للمزارع</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MQTT -->
+                <div class="tech-category iot p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">MQTT Protocol</h3>
+                        <span class="text-2xl">🔄</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">بروتوكول اتصال خفيف</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edge Computing -->
+                <div class="tech-category iot p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">Edge Computing</h3>
+                        <span class="text-2xl">⚡</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">معالجة محلية للبيانات</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-orange-600 font-semibold">متوسطة</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-hard font-semibold">صعب</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-blue-600 font-semibold">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wireless Sensor Networks -->
+                <div class="tech-category iot p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">WSN</h3>
+                        <span class="text-2xl">🕸️</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">شبكات أجهزة الاستشعار اللاسلكية</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Satellite Technologies -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🛰️ تقنيات الأقمار الصناعية</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Google Earth Engine -->
+                <div class="tech-category satellite p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">Google Earth Engine</h3>
+                        <span class="text-2xl">🌍</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">منصة تحليل الأقمار الصناعية السحابية</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية جداً</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي جداً</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Planet Labs API -->
+                <div class="tech-category satellite p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">Planet Labs API</h3>
+                        <span class="text-2xl">🪐</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">صور عالية الدقة يومياً</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODIS Data -->
+                <div class="tech-category satellite p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">MODIS</h3>
+                        <span class="text-2xl">📡</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">بيانات ناسا المجانية</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-orange-600 font-semibold">متوسطة</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-blue-600 font-semibold">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landsat -->
+                <div class="tech-category satellite p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">Landsat</h3>
+                        <span class="text-2xl">🗺️</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">أرشيف طويل المدى</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-orange-600 font-semibold">متوسطة</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-blue-600 font-semibold">متوسط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SNAP Toolbox -->
+                <div class="tech-category satellite p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">SNAP Toolbox</h3>
+                        <span class="text-2xl">🔧</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">أدوات معالجة Sentinel</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-medium font-semibold">متوسط</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rasterio -->
+                <div class="tech-category satellite p-6 rounded-xl card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">Rasterio</h3>
+                        <span class="text-2xl">🐍</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">مكتبة Python للبيانات الجغرافية</p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span>الأولوية:</span>
+                            <span class="text-red-600 font-semibold">عالية</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التعقيد:</span>
+                            <span class="implementation-easy font-semibold">سهل</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>التأثير:</span>
+                            <span class="text-green-600 font-semibold">عالي</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🗺️ خارطة طريق التنفيذ</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Phase 1 -->
+                <div class="bg-red-50 border-2 border-red-200 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-red-800 mb-4">المرحلة الأولى (0-3 أشهر)</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-red-500 rounded-full ml-2"></span>
+                            <span class="text-sm">دمج Sentinel Hub API</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-red-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تطبيق MQTT Protocol</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-red-500 rounded-full ml-2"></span>
+                            <span class="text-sm">نشر نموذج YOLOv8 أساسي</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-red-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تكامل ThingSpeak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="bg-orange-50 border-2 border-orange-200 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-orange-800 mb-4">المرحلة الثانية (3-6 أشهر)</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-orange-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تطوير شبكة WSN</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-orange-500 rounded-full ml-2"></span>
+                            <span class="text-sm">دمج Google Earth Engine</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-orange-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تحسين نماذج LSTM</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-orange-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تطبيق XGBoost</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="bg-green-50 border-2 border-green-200 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-green-800 mb-4">المرحلة الثالثة (6-12 شهر)</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-green-500 rounded-full ml-2"></span>
+                            <span class="text-sm">نشر Edge Computing</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-green-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تطوير تطبيق محمول متقدم</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-green-500 rounded-full ml-2"></span>
+                            <span class="text-sm">دمج الروبوتات الزراعية</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 bg-green-500 rounded-full ml-2"></span>
+                            <span class="text-sm">تحسين AI Models</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white rounded-lg p-2 ml-3">
+                    <span class="text-xl font-bold text-blue-600">A</span>
+                </div>
+                <h4 class="text-xl font-bold">Adham AgriTech - توصيات التقنيات</h4>
+            </div>
+            <p class="text-gray-400 mb-4">قاعدة بيانات شاملة للتقنيات والمستودعات المتقدمة للزراعة الذكية</p>
+            <div class="text-sm text-gray-500">
+                <p>📧 tech@adham-agritech.com | 📱 +966 50 123 4567</p>
+                <p class="mt-2">&copy; 2024 Adham AgriTech. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add interactive effects
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add filter functionality
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const cards = document.querySelectorAll('.tech-category');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    cards.forEach(card => {
+                        if (filter === 'all' || card.classList.contains(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

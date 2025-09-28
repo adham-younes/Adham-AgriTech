@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>اختبار Adham AgriTech</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 2.5em; margin-bottom: 20px; }
+        .status { font-size: 1.5em; margin: 20px 0; }
+        .links { margin: 30px 0; }
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        .info {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 Adham AgriTech</h1>
+        <div class="status">✅ الخادم يعمل بنجاح!</div>
+        
+        <div class="info">
+            <h3>معلومات الخادم:</h3>
+            <p>المنفذ: 8000</p>
+            <p>الحالة: نشط</p>
+            <p>الوقت: <span id="time"></span></p>
+        </div>
+        
+        <div class="links">
+            <a href="index.html">🏠 الصفحة الرئيسية</a>
+            <a href="simple-demo.html">🚀 عرض سريع</a>
+            <a href="demo.html">🎨 واجهة المستخدم</a>
+            <a href="api-demo.html">🔌 Backend API</a>
+        </div>
+        
+        <div class="info">
+            <h3>إذا كنت لا تستطيع الوصول للروابط:</h3>
+            <p>1. تأكد من أن المتصفح يدعم JavaScript</p>
+            <p>2. جرب متصفح آخر</p>
+            <p>3. امسح ذاكرة التخزين المؤقت</p>
+            <p>4. تأكد من أن المنفذ 8000 مفتوح</p>
+        </div>
+    </div>
+    
+    <script>
+        // Update time
+        function updateTime() {
+            document.getElementById('time').textContent = new Date().toLocaleString('ar-SA');
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Add click effects
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                this.style.background = 'rgba(255,255,255,0.5)';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

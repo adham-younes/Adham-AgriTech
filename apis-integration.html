@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham AgriTech - تكامل APIs المتقدم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .api-status { position: relative; }
+        .api-status::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: 50%; animation: pulse 2s infinite; }
+        .api-online::before { background: #10b981; }
+        .api-offline::before { background: #ef4444; }
+        .api-warning::before { background: #f59e0b; }
+        .weather-gradient { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+        .satellite-gradient { background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); }
+        .soil-gradient { background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); }
+        .disease-gradient { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-2 ml-4">
+                        <span class="text-2xl font-bold text-blue-600">A</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">تكامل APIs المتقدم</h1>
+                        <p class="text-blue-100">دمج خدمات الطقس والتربة والأقمار الصناعية</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="text-sm">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation ml-2"></div>
+                            <span>APIs نشطة</span>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        <span class="bg-green-500 px-3 py-1 rounded-full">متصل</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- API Status Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <!-- Weather API -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">OpenWeatherMap</h3>
+                        <p class="text-sm text-gray-600">بيانات الطقس</p>
+                    </div>
+                    <div class="api-status api-online w-4 h-4 rounded-full bg-green-400"></div>
+                </div>
+                <div class="weather-gradient text-white p-4 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🌤️</div>
+                        <div class="text-2xl font-bold">28°C</div>
+                        <div class="text-sm opacity-90">مشمس</div>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-gray-500">
+                    آخر تحديث: منذ دقيقتين
+                </div>
+            </div>
+
+            <!-- Satellite API -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Sentinel Hub</h3>
+                        <p class="text-sm text-gray-600">صور الأقمار الصناعية</p>
+                    </div>
+                    <div class="api-status api-online w-4 h-4 rounded-full bg-green-400"></div>
+                </div>
+                <div class="satellite-gradient text-white p-4 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🛰️</div>
+                        <div class="text-2xl font-bold">Sentinel-2</div>
+                        <div class="text-sm opacity-90">10m دقة</div>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-gray-500">
+                    آخر صورة: اليوم
+                </div>
+            </div>
+
+            <!-- Soil API -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">SoilGrids</h3>
+                        <p class="text-sm text-gray-600">بيانات التربة</p>
+                    </div>
+                    <div class="api-status api-online w-4 h-4 rounded-full bg-green-400"></div>
+                </div>
+                <div class="soil-gradient text-white p-4 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🌍</div>
+                        <div class="text-2xl font-bold">pH 7.2</div>
+                        <div class="text-sm opacity-90">تربة طينية</div>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-gray-500">
+                    آخر تحليل: أمس
+                </div>
+            </div>
+
+            <!-- Disease API -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">PlantNet</h3>
+                        <p class="text-sm text-gray-600">تشخيص الأمراض</p>
+                    </div>
+                    <div class="api-status api-warning w-4 h-4 rounded-full bg-yellow-400"></div>
+                </div>
+                <div class="disease-gradient text-white p-4 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🔬</div>
+                        <div class="text-2xl font-bold">95%</div>
+                        <div class="text-sm opacity-90">دقة التشخيص</div>
+                    </div>
+                </div>
+                <div class="mt-3 text-xs text-gray-500">
+                    في انتظار التحديث
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Integration Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column - Weather Integration -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Weather Dashboard -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">🌤️ لوحة الطقس المتكاملة</h2>
+                        <div class="flex space-x-2 space-x-reverse">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">تحديث</button>
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">تنبؤات</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Weather -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">الطقس الحالي</h3>
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">☀️</div>
+                                <div class="text-3xl font-bold text-blue-600">28°C</div>
+                                <div class="text-sm text-gray-600">مشمس</div>
+                                <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+                                    <div>الرطوبة: 65%</div>
+                                    <div>الرياح: 12 km/h</div>
+                                    <div>الضغط: 1013 hPa</div>
+                                    <div>UV: 6</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">ظروف الزراعة</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">مؤشر الري</span>
+                                    <span class="font-semibold text-green-600">مثالي</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">مؤشر الرش</span>
+                                    <span class="font-semibold text-yellow-600">مناسب</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">مؤشر الحصاد</span>
+                                    <span class="font-semibold text-blue-600">مبكر</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">مؤشر الزراعة</span>
+                                    <span class="font-semibold text-green-600">ممتاز</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">التنبؤات</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span>غداً</span>
+                                    <span class="font-semibold">26°C ⛅</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span>بعد غد</span>
+                                    <span class="font-semibold">24°C 🌧️</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span>3 أيام</span>
+                                    <span class="font-semibold">27°C ☀️</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span>4 أيام</span>
+                                    <span class="font-semibold">29°C ☀️</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Chart -->
+                    <div class="bg-gray-50 rounded-lg p-4 h-64">
+                        <h3 class="text-lg font-semibold mb-4">اتجاه الطقس (7 أيام)</h3>
+                        <canvas id="weatherChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Satellite Integration -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">🛰️ تكامل الأقمار الصناعية</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Satellite Sources -->
+                        <div class="bg-gradient-to-br from-indigo-50 to-purple-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">مصادر الأقمار الصناعية</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <span class="text-2xl ml-3">🛰️</span>
+                                        <div>
+                                            <div class="font-semibold">Sentinel-2</div>
+                                            <div class="text-sm text-gray-600">ESA - 10m دقة</div>
+                                        </div>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <span class="text-2xl ml-3">🛰️</span>
+                                        <div>
+                                            <div class="font-semibold">Landsat-8</div>
+                                            <div class="text-sm text-gray-600">NASA - 30m دقة</div>
+                                        </div>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <span class="text-2xl ml-3">🛰️</span>
+                                        <div>
+                                            <div class="font-semibold">MODIS</div>
+                                            <div class="text-sm text-gray-600">NASA - 250m دقة</div>
+                                        </div>
+                                    </div>
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">محدود</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <span class="text-2xl ml-3">🛰️</span>
+                                        <div>
+                                            <div class="font-semibold">Planet Labs</div>
+                                            <div class="text-sm text-gray-600">3m دقة</div>
+                                        </div>
+                                    </div>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">تجريبي</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Processing -->
+                        <div class="bg-gradient-to-br from-green-50 to-teal-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">معالجة الصور</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold">NDVI</span>
+                                        <span class="text-green-600 font-bold">0.78</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold">NDWI</span>
+                                        <span class="text-blue-600 font-bold">0.45</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold">NDRE</span>
+                                        <span class="text-purple-600 font-bold">0.62</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 62%"></div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold">Chlorophyll</span>
+                                        <span class="text-green-600 font-bold">45.2</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - API Management -->
+            <div class="space-y-8">
+                <!-- API Management -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">⚙️ إدارة APIs</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold">OpenWeatherMap</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">متصل</span>
+                            </div>
+                            <div class="text-sm text-gray-600">API Key: ••••••••••••••••</div>
+                            <div class="text-xs text-gray-500 mt-1">1000/10000 طلب اليوم</div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold">Sentinel Hub</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">متصل</span>
+                            </div>
+                            <div class="text-sm text-gray-600">API Key: ••••••••••••••••</div>
+                            <div class="text-xs text-gray-500 mt-1">50/1000 طلب اليوم</div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold">SoilGrids</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">متصل</span>
+                            </div>
+                            <div class="text-sm text-gray-600">API Key: ••••••••••••••••</div>
+                            <div class="text-xs text-gray-500 mt-1">200/500 طلب اليوم</div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-semibold">PlantNet</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">محدود</span>
+                            </div>
+                            <div class="text-sm text-gray-600">API Key: ••••••••••••••••</div>
+                            <div class="text-xs text-gray-500 mt-1">500/1000 طلب اليوم</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soil Analysis -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">🌍 تحليل التربة</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-orange-800">pH التربة</div>
+                                    <div class="text-sm text-orange-600">7.2 - مثالي</div>
+                                </div>
+                                <div class="text-2xl">🧪</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-green-800">النيتروجين</div>
+                                    <div class="text-sm text-green-600">45 mg/kg - جيد</div>
+                                </div>
+                                <div class="text-2xl">🌱</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-blue-800">الفوسفور</div>
+                                    <div class="text-sm text-blue-600">12 mg/kg - متوسط</div>
+                                </div>
+                                <div class="text-2xl">⚗️</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-purple-800">البوتاسيوم</div>
+                                    <div class="text-sm text-purple-600">180 mg/kg - ممتاز</div>
+                                </div>
+                                <div class="text-2xl">💎</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disease Detection -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">🔬 كشف الأمراض</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-green-50 border-r-4 border-green-400 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-green-600 ml-2">✅</span>
+                                <div>
+                                    <div class="font-semibold text-green-800">لا توجد أمراض</div>
+                                    <div class="text-sm text-green-600">جميع المحاصيل سليمة</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-yellow-50 border-r-4 border-yellow-400 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-yellow-600 ml-2">⚠️</span>
+                                <div>
+                                    <div class="font-semibold text-yellow-800">مراقبة مستمرة</div>
+                                    <div class="text-sm text-yellow-600">ظروف مناسبة للفطريات</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-blue-50 border-r-4 border-blue-400 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-blue-600 ml-2">💡</span>
+                                <div>
+                                    <div class="font-semibold text-blue-800">توصية وقائية</div>
+                                    <div class="text-sm text-blue-600">رش وقائي خلال 3 أيام</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Integration Status -->
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">📊 حالة تكامل APIs</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- API Performance -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">أداء APIs</h3>
+                    <div class="bg-gray-50 rounded-lg p-4 h-64 flex items-center justify-center">
+                        <canvas id="apiPerformanceChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Data Flow -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">تدفق البيانات</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-2xl ml-3">🌤️</span>
+                                <div>
+                                    <div class="font-semibold">بيانات الطقس</div>
+                                    <div class="text-sm text-gray-600">تحديث كل ساعة</div>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-2xl ml-3">🛰️</span>
+                                <div>
+                                    <div class="font-semibold">صور الأقمار الصناعية</div>
+                                    <div class="text-sm text-gray-600">تحديث يومي</div>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-2xl ml-3">🌍</span>
+                                <div>
+                                    <div class="font-semibold">بيانات التربة</div>
+                                    <div class="text-sm text-gray-600">تحديث أسبوعي</div>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="text-2xl ml-3">🔬</span>
+                                <div>
+                                    <div class="font-semibold">تشخيص الأمراض</div>
+                                    <div class="text-sm text-gray-600">عند الطلب</div>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">محدود</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white rounded-lg p-2 ml-3">
+                    <span class="text-xl font-bold text-blue-600">A</span>
+                </div>
+                <h4 class="text-xl font-bold">Adham AgriTech - تكامل APIs</h4>
+            </div>
+            <p class="text-gray-400 mb-4">دمج متقدم لخدمات الطقس والتربة والأقمار الصناعية</p>
+            <div class="text-sm text-gray-500">
+                <p>📧 apis@adham-agritech.com | 📱 +966 50 123 4567</p>
+                <p class="mt-2">&copy; 2024 Adham AgriTech. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Weather Chart
+            const weatherCtx = document.getElementById('weatherChart').getContext('2d');
+            new Chart(weatherCtx, {
+                type: 'line',
+                data: {
+                    labels: ['اليوم', 'غداً', 'بعد غد', '3 أيام', '4 أيام', '5 أيام', '6 أيام'],
+                    datasets: [{
+                        label: 'درجة الحرارة',
+                        data: [28, 26, 24, 27, 29, 30, 28],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 20,
+                            max: 35
+                        }
+                    }
+                }
+            });
+
+            // API Performance Chart
+            const apiCtx = document.getElementById('apiPerformanceChart').getContext('2d');
+            new Chart(apiCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['OpenWeatherMap', 'Sentinel Hub', 'SoilGrids', 'PlantNet'],
+                    datasets: [{
+                        data: [95, 98, 92, 85],
+                        backgroundColor: ['#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Add interactive effects
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Simulate real-time API updates
+            setInterval(function() {
+                // Update API status indicators
+                const statusIndicators = document.querySelectorAll('.api-status');
+                statusIndicators.forEach(indicator => {
+                    if (Math.random() > 0.95) {
+                        indicator.classList.toggle('pulse-animation');
+                    }
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

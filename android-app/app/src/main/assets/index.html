@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Adham AgriTech - نظام الزراعة الذكية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .mobile-optimized { 
+            padding: 16px; 
+            max-width: 100%; 
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3);
+        }
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .nav-button.secondary:hover {
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <div class="text-white text-center py-8 px-4">
+        <div class="flex items-center justify-center mb-4">
+            <div class="bg-white rounded-lg p-3 ml-4">
+                <span class="text-3xl font-bold text-blue-600">A</span>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold">Adham AgriTech</h1>
+                <p class="text-blue-100 text-sm">نظام الزراعة الذكية</p>
+            </div>
+        </div>
+        <div class="flex items-center justify-center">
+            <span class="status-indicator"></span>
+            <span class="text-sm">نظام نشط</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="mobile-optimized">
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">المزارع</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0.78</div>
+                <div class="stat-label">NDVI</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">45</div>
+                <div class="stat-label">أجهزة الاستشعار</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">97%</div>
+                <div class="stat-label">دقة AI</div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="feature-card">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">🌱 الميزات الرئيسية</h2>
+            
+            <button class="nav-button" onclick="openPage('enhanced-demo.html')">
+                🌟 النسخة المحسنة
+            </button>
+            
+            <button class="nav-button secondary" onclick="openPage('ndvi-analyzer.html')">
+                🔬 محلل NDVI
+            </button>
+            
+            <button class="nav-button" onclick="openPage('apis-integration.html')">
+                🔌 تكامل APIs
+            </button>
+            
+            <button class="nav-button secondary" onclick="openPage('smart-alerts.html')">
+                🤖 التنبيهات الذكية
+            </button>
+            
+            <button class="nav-button" onclick="openPage('demo.html')">
+                🎨 الواجهة الأساسية
+            </button>
+            
+            <button class="nav-button secondary" onclick="openPage('api-demo.html')">
+                📡 Backend API
+            </button>
+        </div>
+
+        <!-- Features Overview -->
+        <div class="feature-card">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">🛠️ الميزات المتقدمة</h3>
+            <div class="space-y-3">
+                <div class="flex items-center">
+                    <span class="text-2xl ml-3">🛰️</span>
+                    <div>
+                        <div class="font-semibold text-gray-800">مراقبة الأقمار الصناعية</div>
+                        <div class="text-sm text-gray-600">تحليل NDVI والكلوروفيل</div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-2xl ml-3">🤖</span>
+                    <div>
+                        <div class="font-semibold text-gray-800">الذكاء الاصطناعي</div>
+                        <div class="text-sm text-gray-600">كشف الأمراض والتنبؤات</div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-2xl ml-3">📡</span>
+                    <div>
+                        <div class="font-semibold text-gray-800">أجهزة الاستشعار IoT</div>
+                        <div class="text-sm text-gray-600">مراقبة التربة والطقس</div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-2xl ml-3">📊</span>
+                    <div>
+                        <div class="font-semibold text-gray-800">التحليلات الذكية</div>
+                        <div class="text-sm text-gray-600">تقارير وتوصيات مخصصة</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="feature-card">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">⚡ إجراءات سريعة</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="bg-green-100 text-green-800 p-3 rounded-lg text-sm font-semibold" onclick="openPage('ndvi-analyzer.html')">
+                    📈 تحليل NDVI
+                </button>
+                <button class="bg-blue-100 text-blue-800 p-3 rounded-lg text-sm font-semibold" onclick="openPage('smart-alerts.html')">
+                    🔔 التنبيهات
+                </button>
+                <button class="bg-purple-100 text-purple-800 p-3 rounded-lg text-sm font-semibold" onclick="openPage('apis-integration.html')">
+                    🌤️ الطقس
+                </button>
+                <button class="bg-orange-100 text-orange-800 p-3 rounded-lg text-sm font-semibold" onclick="openPage('enhanced-demo.html')">
+                    🏡 المزارع
+                </button>
+            </div>
+        </div>
+
+        <!-- App Info -->
+        <div class="feature-card text-center">
+            <h3 class="text-lg font-bold text-gray-800 mb-2">📱 Adham AgriTech Mobile</h3>
+            <p class="text-sm text-gray-600 mb-3">تطبيق الزراعة الذكية المحمول</p>
+            <div class="text-xs text-gray-500">
+                <p>الإصدار 1.0.0</p>
+                <p>© 2024 Adham AgriTech</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPage(page) {
+            // في التطبيق الحقيقي، سيتم فتح الصفحة في WebView
+            // هنا سنعرض رسالة للمستخدم
+            alert('سيتم فتح: ' + page + '\n\nفي التطبيق الكامل، ستتمكن من تصفح جميع الصفحات والاستفادة من جميع الميزات المتقدمة.');
+        }
+
+        // إضافة تأثيرات تفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحديث الإحصائيات كل 5 ثوان
+            setInterval(function() {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    if (stat.textContent.includes('.')) {
+                        const currentValue = parseFloat(stat.textContent);
+                        const newValue = (currentValue + (Math.random() - 0.5) * 0.02).toFixed(2);
+                        stat.textContent = newValue;
+                    }
+                });
+            }, 5000);
+
+            // إضافة تأثيرات النقر
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

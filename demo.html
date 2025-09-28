@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham AgriTech - نظام الزراعة الذكية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-2 ml-4">
+                        <span class="text-2xl font-bold text-blue-600">A</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Adham AgriTech</h1>
+                        <p class="text-blue-100">نظام الزراعة الذكية مع مراقبة الأقمار الصناعية</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6 space-x-reverse">
+                    <a href="#features" class="hover:text-blue-200 transition-colors">الميزات</a>
+                    <a href="#demo" class="hover:text-blue-200 transition-colors">العرض التوضيحي</a>
+                    <a href="#contact" class="hover:text-blue-200 transition-colors">اتصل بنا</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold mb-6">مرحباً بك في مستقبل الزراعة</h2>
+            <p class="text-xl mb-8 text-blue-100">نظام متكامل يجمع بين تقنيات الأقمار الصناعية والذكاء الاصطناعي لمراقبة وإدارة المزارع بكفاءة عالية</p>
+            <div class="flex justify-center space-x-4 space-x-reverse">
+                <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                    ابدأ الآن
+                </button>
+                <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                    شاهد العرض التوضيحي
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center mb-16 text-gray-800">الميزات الرئيسية</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-100">
+                    <div class="text-4xl mb-4">🛰️</div>
+                    <h4 class="text-xl font-semibold mb-3 text-gray-800">مراقبة الأقمار الصناعية</h4>
+                    <p class="text-gray-600">تحليل صور الأقمار الصناعية لمراقبة نمو المحاصيل وكشف الأمراض</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-100">
+                    <div class="text-4xl mb-4">🌱</div>
+                    <h4 class="text-xl font-semibold mb-3 text-gray-800">الزراعة الذكية</h4>
+                    <p class="text-gray-600">إدارة أجهزة الاستشعار IoT لمراقبة التربة والمناخ</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-100">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h4 class="text-xl font-semibold mb-3 text-gray-800">التحليلات الذكية</h4>
+                    <p class="text-gray-600">تقارير تفاعلية وتحليلات متقدمة لأداء المزارع</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-100">
+                    <div class="text-4xl mb-4">📱</div>
+                    <h4 class="text-xl font-semibold mb-3 text-gray-800">واجهة سهلة الاستخدام</h4>
+                    <p class="text-gray-600">واجهة مستخدم حديثة ومتجاوبة مع جميع الأجهزة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center mb-16 text-gray-800">العرض التوضيحي</h3>
+            
+            <!-- Dashboard Demo -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h4 class="text-2xl font-semibold mb-6 text-gray-800">لوحة التحكم الرئيسية</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Stats Cards -->
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="text-3xl ml-3">🏡</div>
+                            <div>
+                                <div class="text-2xl font-bold text-blue-600">5</div>
+                                <div class="text-sm text-gray-600">المزارع</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="text-3xl ml-3">🌾</div>
+                            <div>
+                                <div class="text-2xl font-bold text-green-600">23</div>
+                                <div class="text-sm text-gray-600">المحاصيل</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="text-3xl ml-3">📡</div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-600">45</div>
+                                <div class="text-sm text-gray-600">أجهزة الاستشعار</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="text-3xl ml-3">🛰️</div>
+                            <div>
+                                <div class="text-2xl font-bold text-purple-600">12</div>
+                                <div class="text-sm text-gray-600">صور الأقمار الصناعية</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farm Management Demo -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h4 class="text-2xl font-semibold mb-6 text-gray-800">إدارة المزارع</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Farm Card 1 -->
+                    <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <h5 class="text-lg font-semibold">المزرعة الشمالية</h5>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">نشطة</span>
+                        </div>
+                        <p class="text-gray-600 mb-3">الرياض، المملكة العربية السعودية</p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <div class="text-gray-500">المساحة</div>
+                                <div class="font-medium">25.5 هكتار</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-500">المحاصيل</div>
+                                <div class="font-medium">8</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farm Card 2 -->
+                    <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <h5 class="text-lg font-semibold">المزرعة الجنوبية</h5>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">نشطة</span>
+                        </div>
+                        <p class="text-gray-600 mb-3">الدمام، المملكة العربية السعودية</p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <div class="text-gray-500">المساحة</div>
+                                <div class="font-medium">18.2 هكتار</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-500">المحاصيل</div>
+                                <div class="font-medium">5</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farm Card 3 -->
+                    <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <h5 class="text-lg font-semibold">مزرعة الوادي</h5>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">صيانة</span>
+                        </div>
+                        <p class="text-gray-600 mb-3">الطائف، المملكة العربية السعودية</p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <div class="text-gray-500">المساحة</div>
+                                <div class="font-medium">32.1 هكتار</div>
+                            </div>
+                            <div>
+                                <div class="text-gray-500">المحاصيل</div>
+                                <div class="font-medium">12</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Satellite Data Demo -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h4 class="text-2xl font-semibold mb-6 text-gray-800">بيانات الأقمار الصناعية</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Satellite Data Card 1 -->
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <div class="h-48 bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">🛰️</div>
+                                <p class="text-gray-500">صورة Sentinel-2</p>
+                            </div>
+                        </div>
+                        <h5 class="font-semibold mb-2">Sentinel-2</h5>
+                        <p class="text-sm text-gray-600 mb-3">المزرعة الشمالية - 20 يناير 2024</p>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">الغطاء السحابي</span>
+                            <span class="font-medium">5.2%</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">جودة الصورة</span>
+                            <span class="font-medium text-green-600">95%</span>
+                        </div>
+                    </div>
+
+                    <!-- Satellite Data Card 2 -->
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <div class="h-48 bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">🛰️</div>
+                                <p class="text-gray-500">صورة Landsat-8</p>
+                            </div>
+                        </div>
+                        <h5 class="font-semibold mb-2">Landsat-8</h5>
+                        <p class="text-sm text-gray-600 mb-3">المزرعة الجنوبية - 18 يناير 2024</p>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">الغطاء السحابي</span>
+                            <span class="font-medium">12.8%</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">جودة الصورة</span>
+                            <span class="font-medium text-green-600">88%</span>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Results -->
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <h5 class="font-semibold mb-4">نتائج التحليل</h5>
+                        <div class="space-y-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">0.75</div>
+                                <div class="text-sm text-gray-500">مؤشر NDVI</div>
+                                <div class="text-xs text-gray-400">غطاء نباتي جيد</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">0.45</div>
+                                <div class="text-sm text-gray-500">مؤشر NDWI</div>
+                                <div class="text-xs text-gray-400">رطوبة متوسطة</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-yellow-600">85%</div>
+                                <div class="text-sm text-gray-500">صحة المحاصيل</div>
+                                <div class="text-xs text-gray-400">حالة جيدة</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-4xl font-bold mb-8 text-gray-800">ابدأ رحلتك مع الزراعة الذكية</h3>
+            <p class="text-xl text-gray-600 mb-8">تواصل معنا لمعرفة المزيد عن نظام Adham AgriTech</p>
+            <div class="flex justify-center space-x-4 space-x-reverse">
+                <button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    اطلب عرض توضيحي
+                </button>
+                <button class="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
+                    تحميل التطبيق
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-white rounded-lg p-2 ml-3">
+                            <span class="text-xl font-bold text-blue-600">A</span>
+                        </div>
+                        <h4 class="text-xl font-bold">Adham AgriTech</h4>
+                    </div>
+                    <p class="text-gray-400">نظام الزراعة الذكية مع مراقبة الأقمار الصناعية</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">المنتجات</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">مراقبة الأقمار الصناعية</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">أجهزة الاستشعار IoT</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">التحليلات الذكية</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">تقارير المزارع</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">الدعم</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">التوثيق</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">الدعم الفني</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">الأسئلة الشائعة</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">تواصل معنا</h5>
+                    <div class="space-y-2 text-gray-400">
+                        <p>📧 info@adham-agritech.com</p>
+                        <p>📱 +966 50 123 4567</p>
+                        <p>📍 الرياض، المملكة العربية السعودية</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Adham AgriTech. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

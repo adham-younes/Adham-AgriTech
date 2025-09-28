@@ -1,0 +1,197 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: adham-agritech-db
+    environment:
+      POSTGRES_DB: adham_agritech
+      POSTGRES_USER: adham
+      POSTGRES_PASSWORD: password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - agritech-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adham -d adham_agritech"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: adham-agritech-redis
+    command: redis-server --appendonly yes --requirepass redis_password
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - agritech-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: adham-agritech-backend
+    environment:
+      - DATABASE_URL=postgresql://adham:password@postgres:5432/adham_agritech
+      - DATABASE_URL_ASYNC=postgresql+asyncpg://adham:password@postgres:5432/adham_agritech
+      - REDIS_URL=redis://:redis_password@redis:6379/0
+      - CELERY_BROKER_URL=redis://:redis_password@redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://:redis_password@redis:6379/1
+      - SECRET_KEY=your-super-secret-key-change-in-production
+      - ENVIRONMENT=production
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    ports:
+      - "8000:8000"
+    networks:
+      - agritech-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: adham-agritech-celery-worker
+    command: celery -A app.core.celery worker --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://adham:password@postgres:5432/adham_agritech
+      - REDIS_URL=redis://:redis_password@redis:6379/0
+      - CELERY_BROKER_URL=redis://:redis_password@redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://:redis_password@redis:6379/1
+      - SECRET_KEY=your-super-secret-key-change-in-production
+      - ENVIRONMENT=production
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    networks:
+      - agritech-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Celery Beat (Scheduler)
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: adham-agritech-celery-beat
+    command: celery -A app.core.celery beat --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://adham:password@postgres:5432/adham_agritech
+      - REDIS_URL=redis://:redis_password@redis:6379/0
+      - CELERY_BROKER_URL=redis://:redis_password@redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://:redis_password@redis:6379/1
+      - SECRET_KEY=your-super-secret-key-change-in-production
+      - ENVIRONMENT=production
+    volumes:
+      - ./backend:/app
+      - celery_beat_data:/app/celerybeat-schedule
+    networks:
+      - agritech-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Flower (Celery Monitoring)
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: adham-agritech-flower
+    command: celery -A app.core.celery flower --port=5555
+    environment:
+      - CELERY_BROKER_URL=redis://:redis_password@redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://:redis_password@redis:6379/1
+    ports:
+      - "5555:5555"
+    networks:
+      - agritech-network
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: adham-agritech-frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_ENVIRONMENT=production
+    ports:
+      - "3000:3000"
+    networks:
+      - agritech-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: adham-agritech-nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - frontend_build:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - agritech-network
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  backend_uploads:
+    driver: local
+  celery_beat_data:
+    driver: local
+  frontend_build:
+    driver: local
+
+networks:
+  agritech-network:
+    driver: bridge

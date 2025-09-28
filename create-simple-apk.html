@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham AgriTech - تحميل APK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .download-card { 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 16px;
+        }
+        .feature-1 { background: linear-gradient(135deg, #10b981, #059669); }
+        .feature-2 { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .feature-3 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .feature-4 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Header -->
+        <div class="text-center text-white mb-12">
+            <div class="flex items-center justify-center mb-6">
+                <div class="bg-white rounded-lg p-3 ml-4">
+                    <span class="text-4xl font-bold text-blue-600">A</span>
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold">Adham AgriTech</h1>
+                    <p class="text-blue-100 text-lg">تطبيق الزراعة الذكية المحمول</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Card -->
+        <div class="download-card max-w-4xl mx-auto p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">📱 تحميل التطبيق</h2>
+                <p class="text-gray-600 text-lg">احصل على تطبيق Adham AgriTech على هاتفك الآن</p>
+            </div>
+
+            <!-- App Info -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="text-center">
+                    <div class="feature-icon feature-1 text-white">📱</div>
+                    <h3 class="font-semibold text-gray-800 mb-2">تطبيق محمول</h3>
+                    <p class="text-sm text-gray-600">واجهة محسنة للهواتف الذكية</p>
+                </div>
+                <div class="text-center">
+                    <div class="feature-icon feature-2 text-white">🚀</div>
+                    <h3 class="font-semibold text-gray-800 mb-2">سريع وآمن</h3>
+                    <p class="text-sm text-gray-600">أداء محسن وحماية متقدمة</p>
+                </div>
+                <div class="text-center">
+                    <div class="feature-icon feature-3 text-white">🌱</div>
+                    <h3 class="font-semibold text-gray-800 mb-2">زراعة ذكية</h3>
+                    <p class="text-sm text-gray-600">جميع الميزات في جيبك</p>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <div class="text-center mb-8">
+                <a href="#" class="download-btn" onclick="downloadAPK()">
+                    📥 تحميل APK - الإصدار 1.0.0
+                </a>
+                <p class="text-sm text-gray-500 mt-4">حجم الملف: ~15MB | متوافق مع Android 5.0+</p>
+            </div>
+
+            <!-- Features -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold text-green-800 mb-3">🌟 الميزات الرئيسية</h3>
+                    <ul class="space-y-2 text-sm text-green-700">
+                        <li>• مراقبة الأقمار الصناعية</li>
+                        <li>• تحليل NDVI والكلوروفيل</li>
+                        <li>• الذكاء الاصطناعي لكشف الأمراض</li>
+                        <li>• أجهزة الاستشعار IoT</li>
+                        <li>• التحليلات الذكية</li>
+                        <li>• التنبيهات الفورية</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-3">📊 الإحصائيات المباشرة</h3>
+                    <ul class="space-y-2 text-sm text-blue-700">
+                        <li>• عدد المزارع النشطة</li>
+                        <li>• مؤشر NDVI الحالي</li>
+                        <li>• عدد أجهزة الاستشعار</li>
+                        <li>• دقة نماذج AI</li>
+                        <li>• حالة الطقس</li>
+                        <li>• التنبيهات النشطة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Installation Instructions -->
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">🔧 تعليمات التثبيت</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">📱 على الهاتف:</h4>
+                        <ol class="text-sm text-gray-600 space-y-1">
+                            <li>1. انقر على زر التحميل أعلاه</li>
+                            <li>2. انتظر اكتمال التحميل</li>
+                            <li>3. فعّل "مصادر غير معروفة" في الإعدادات</li>
+                            <li>4. اضغط على ملف APK للتثبيت</li>
+                            <li>5. اتبع التعليمات على الشاشة</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">💻 عبر الكمبيوتر:</h4>
+                        <ol class="text-sm text-gray-600 space-y-1">
+                            <li>1. حمّل ملف APK إلى الكمبيوتر</li>
+                            <li>2. انقل الملف إلى الهاتف</li>
+                            <li>3. افتح الملف على الهاتف</li>
+                            <li>4. فعّل "مصادر غير معروفة"</li>
+                            <li>5. اضغط "تثبيت"</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Requirements -->
+            <div class="mt-8 p-6 bg-yellow-50 rounded-lg">
+                <h3 class="text-lg font-semibold text-yellow-800 mb-3">⚙️ متطلبات النظام</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-yellow-700">
+                    <div>
+                        <strong>نظام التشغيل:</strong> Android 5.0+ (API 21+)<br>
+                        <strong>الذاكرة:</strong> 2GB RAM كحد أدنى<br>
+                        <strong>التخزين:</strong> 50MB مساحة فارغة
+                    </div>
+                    <div>
+                        <strong>الشبكة:</strong> اتصال إنترنت<br>
+                        <strong>الأذونات:</strong> كاميرا، موقع، تخزين<br>
+                        <strong>المتصفح:</strong> WebView مدمج
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="text-center mt-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">📞 الدعم الفني</h3>
+                <div class="flex justify-center space-x-6 space-x-reverse text-sm text-gray-600">
+                    <div>
+                        <strong>البريد الإلكتروني:</strong><br>
+                        support@adham-agritech.com
+                    </div>
+                    <div>
+                        <strong>الهاتف:</strong><br>
+                        +966 50 123 4567
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-white mt-12">
+            <p class="text-blue-100">© 2024 Adham AgriTech. جميع الحقوق محفوظة.</p>
+        </div>
+    </div>
+
+    <script>
+        function downloadAPK() {
+            // في التطبيق الحقيقي، سيتم تحميل ملف APK
+            // هنا سنعرض رسالة للمستخدم
+            alert('📱 تحميل APK\n\n' +
+                  'في التطبيق الكامل، سيتم تحميل ملف APK جاهز للتثبيت.\n\n' +
+                  'معلومات التطبيق:\n' +
+                  '• اسم التطبيق: Adham AgriTech\n' +
+                  '• الإصدار: 1.0.0\n' +
+                  '• الحجم: ~15MB\n' +
+                  '• متوافق مع: Android 5.0+\n\n' +
+                  'للتثبيت:\n' +
+                  '1. فعّل "مصادر غير معروفة"\n' +
+                  '2. اضغط على ملف APK\n' +
+                  '3. اتبع التعليمات\n\n' +
+                  '📞 الدعم: support@adham-agritech.com');
+        }
+
+        // إضافة تأثيرات تفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثير النقر على زر التحميل
+            const downloadBtn = document.querySelector('.download-btn');
+            downloadBtn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+
+            // تحديث الإحصائيات كل 3 ثوان
+            setInterval(function() {
+                const features = document.querySelectorAll('.feature-icon');
+                features.forEach(feature => {
+                    if (Math.random() > 0.8) {
+                        feature.style.transform = 'scale(1.1)';
+                        setTimeout(() => {
+                            feature.style.transform = '';
+                        }, 300);
+                    }
+                });
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

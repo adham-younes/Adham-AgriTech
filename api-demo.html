@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham AgriTech API - عرض توضيحي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .code-block { background: #1f2937; color: #f9fafb; padding: 1rem; border-radius: 0.5rem; font-family: 'Courier New', monospace; }
+        .endpoint { background: #f3f4f6; padding: 0.5rem; border-radius: 0.25rem; font-family: 'Courier New', monospace; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-2 ml-4">
+                        <span class="text-2xl font-bold text-blue-600">A</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Adham AgriTech API</h1>
+                        <p class="text-blue-100">عرض توضيحي لـ Backend API</p>
+                    </div>
+                </div>
+                <div class="text-sm">
+                    <span class="bg-green-500 px-3 py-1 rounded-full">API جاهز</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- API Status -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">حالة API</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="text-2xl ml-3">✅</div>
+                        <div>
+                            <div class="font-semibold text-green-800">Backend API</div>
+                            <div class="text-sm text-green-600">جاهز للتشغيل</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="text-2xl ml-3">🗄️</div>
+                        <div>
+                            <div class="font-semibold text-blue-800">قاعدة البيانات</div>
+                            <div class="text-sm text-blue-600">PostgreSQL + Redis</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="text-2xl ml-3">🛰️</div>
+                        <div>
+                            <div class="font-semibold text-purple-800">الأقمار الصناعية</div>
+                            <div class="text-sm text-purple-600">Sentinel Hub API</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Endpoints -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">نقاط النهاية الرئيسية</h2>
+            
+            <!-- Authentication -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">🔐 المصادقة</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">POST /api/v1/auth/login</div>
+                            <div class="text-sm text-gray-600">تسجيل الدخول</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">POST /api/v1/auth/register</div>
+                            <div class="text-sm text-gray-600">إنشاء حساب جديد</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farms -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">🏡 إدارة المزارع</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/farms/</div>
+                            <div class="text-sm text-gray-600">قائمة المزارع</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">POST /api/v1/farms/</div>
+                            <div class="text-sm text-gray-600">إنشاء مزرعة جديدة</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/farms/{id}</div>
+                            <div class="text-sm text-gray-600">تفاصيل المزرعة</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crops -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">🌾 إدارة المحاصيل</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/crops/</div>
+                            <div class="text-sm text-gray-600">قائمة المحاصيل</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">POST /api/v1/crops/</div>
+                            <div class="text-sm text-gray-600">إضافة محصول جديد</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensors -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">📡 أجهزة الاستشعار</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/sensors/</div>
+                            <div class="text-sm text-gray-600">قائمة أجهزة الاستشعار</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/sensors/{id}/readings</div>
+                            <div class="text-sm text-gray-600">قراءات أجهزة الاستشعار</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Satellite Data -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">🛰️ بيانات الأقمار الصناعية</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/satellite/data</div>
+                            <div class="text-sm text-gray-600">بيانات الأقمار الصناعية</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/satellite/analyses</div>
+                            <div class="text-sm text-gray-600">تحليلات الأقمار الصناعية</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">POST /api/v1/satellite/request-imagery</div>
+                            <div class="text-sm text-gray-600">طلب صور جديدة</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-3 text-gray-700">📊 التحليلات</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/analytics/dashboard</div>
+                            <div class="text-sm text-gray-600">بيانات لوحة التحكم</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="endpoint">GET /api/v1/analytics/farm/{id}</div>
+                            <div class="text-sm text-gray-600">تحليلات المزرعة</div>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">جاهز</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample API Calls -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">أمثلة على استدعاءات API</h2>
+            
+            <!-- Login Example -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3 text-gray-700">تسجيل الدخول</h3>
+                <div class="code-block">
+curl -X POST "http://localhost:8000/api/v1/auth/login" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=admin&password=password"
+                </div>
+            </div>
+
+            <!-- Get Farms Example -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3 text-gray-700">الحصول على قائمة المزارع</h3>
+                <div class="code-block">
+curl -X GET "http://localhost:8000/api/v1/farms/" \
+  -H "Authorization: Bearer &lt;your-jwt-token&gt;"
+                </div>
+            </div>
+
+            <!-- Create Farm Example -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3 text-gray-700">إنشاء مزرعة جديدة</h3>
+                <div class="code-block">
+curl -X POST "http://localhost:8000/api/v1/farms/" \
+  -H "Authorization: Bearer &lt;your-jwt-token&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "مزرعة جديدة",
+    "description": "وصف المزرعة",
+    "location": "الرياض، المملكة العربية السعودية",
+    "area_hectares": 10.0,
+    "owner_id": 1
+  }'
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Schema -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">هيكل قاعدة البيانات</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Users Table -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">👥 المستخدمون (Users)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• id (Primary Key)</li>
+                        <li>• email</li>
+                        <li>• username</li>
+                        <li>• full_name</li>
+                        <li>• hashed_password</li>
+                        <li>• is_active</li>
+                        <li>• created_at</li>
+                    </ul>
+                </div>
+
+                <!-- Farms Table -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">🏡 المزارع (Farms)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• id (Primary Key)</li>
+                        <li>• name</li>
+                        <li>• location</li>
+                        <li>• area_hectares</li>
+                        <li>• soil_type</li>
+                        <li>• owner_id (Foreign Key)</li>
+                        <li>• created_at</li>
+                    </ul>
+                </div>
+
+                <!-- Crops Table -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">🌾 المحاصيل (Crops)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• id (Primary Key)</li>
+                        <li>• name</li>
+                        <li>• crop_type</li>
+                        <li>• planting_date</li>
+                        <li>• status</li>
+                        <li>• farm_id (Foreign Key)</li>
+                        <li>• created_at</li>
+                    </ul>
+                </div>
+
+                <!-- Sensors Table -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">📡 أجهزة الاستشعار (Sensors)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• id (Primary Key)</li>
+                        <li>• name</li>
+                        <li>• sensor_type</li>
+                        <li>• device_id</li>
+                        <li>• latitude/longitude</li>
+                        <li>• farm_id (Foreign Key)</li>
+                        <li>• is_online</li>
+                    </ul>
+                </div>
+
+                <!-- Satellite Data Table -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">🛰️ بيانات الأقمار الصناعية</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• id (Primary Key)</li>
+                        <li>• satellite_type</li>
+                        <li>• acquisition_date</li>
+                        <li>• cloud_coverage</li>
+                        <li>• image_url</li>
+                        <li>• farm_id (Foreign Key)</li>
+                        <li>• is_processed</li>
+                    </ul>
+                </div>
+
+                <!-- Weather Data Table -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">🌤️ بيانات الطقس</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• id (Primary Key)</li>
+                        <li>• temperature_celsius</li>
+                        <li>• humidity_percent</li>
+                        <li>• wind_speed_kmh</li>
+                        <li>• rainfall_mm</li>
+                        <li>• farm_id (Foreign Key)</li>
+                        <li>• measurement_time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">التقنيات المستخدمة</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Backend -->
+                <div class="text-center">
+                    <div class="text-4xl mb-3">🐍</div>
+                    <h4 class="font-semibold mb-2">Backend</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• FastAPI</li>
+                        <li>• Python 3.11+</li>
+                        <li>• SQLAlchemy</li>
+                        <li>• Alembic</li>
+                    </ul>
+                </div>
+
+                <!-- Database -->
+                <div class="text-center">
+                    <div class="text-4xl mb-3">🗄️</div>
+                    <h4 class="font-semibold mb-2">قاعدة البيانات</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• PostgreSQL</li>
+                        <li>• Redis</li>
+                        <li>• PostGIS</li>
+                        <li>• Connection Pooling</li>
+                    </ul>
+                </div>
+
+                <!-- Frontend -->
+                <div class="text-center">
+                    <div class="text-4xl mb-3">⚛️</div>
+                    <h4 class="font-semibold mb-2">Frontend</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• React 18</li>
+                        <li>• TypeScript</li>
+                        <li>• Tailwind CSS</li>
+                        <li>• React Query</li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="text-center">
+                    <div class="text-4xl mb-3">☁️</div>
+                    <h4 class="font-semibold mb-2">الخدمات</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Sentinel Hub API</li>
+                        <li>• NASA APIs</li>
+                        <li>• Celery</li>
+                        <li>• Docker</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white rounded-lg p-2 ml-3">
+                    <span class="text-xl font-bold text-blue-600">A</span>
+                </div>
+                <h4 class="text-xl font-bold">Adham AgriTech API</h4>
+            </div>
+            <p class="text-gray-400 mb-4">نظام الزراعة الذكية مع مراقبة الأقمار الصناعية</p>
+            <div class="text-sm text-gray-500">
+                <p>📧 api@adham-agritech.com | 📱 +966 50 123 4567</p>
+                <p class="mt-2">&copy; 2024 Adham AgriTech. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add some interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for API endpoints
+            document.querySelectorAll('.endpoint').forEach(endpoint => {
+                endpoint.addEventListener('click', function() {
+                    // Copy to clipboard functionality
+                    navigator.clipboard.writeText(this.textContent).then(() => {
+                        // Show success message
+                        const originalText = this.textContent;
+                        this.textContent = 'تم النسخ!';
+                        this.style.color = '#10b981';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.color = '';
+                        }, 1000);
+                    });
+                });
+            });
+
+            // Add hover effects
+            document.querySelectorAll('.code-block').forEach(block => {
+                block.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent).then(() => {
+                        this.style.backgroundColor = '#10b981';
+                        setTimeout(() => {
+                            this.style.backgroundColor = '#1f2937';
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

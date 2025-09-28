@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adham AgriTech - محلل NDVI والكلوروفيل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .ndvi-gradient { background: linear-gradient(90deg, #8B0000 0%, #FF0000 25%, #FFFF00 50%, #00FF00 75%, #006400 100%); }
+        .chlorophyll-gradient { background: linear-gradient(90deg, #4A4A4A 0%, #8B4513 25%, #DAA520 50%, #32CD32 75%, #228B22 100%); }
+        .spectral-gradient { background: linear-gradient(90deg, #000080 0%, #0000FF 20%, #00FFFF 40%, #00FF00 60%, #FFFF00 80%, #FF0000 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .analysis-overlay { background: rgba(0, 0, 0, 0.8); }
+        .spectral-bar { height: 20px; border-radius: 10px; }
+        .value-indicator { position: relative; }
+        .value-indicator::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; animation: pulse 2s infinite; }
+        .excellent::after { background: #10b981; }
+        .good::after { background: #3b82f6; }
+        .moderate::after { background: #f59e0b; }
+        .poor::after { background: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-2 ml-4">
+                        <span class="text-2xl font-bold text-blue-600">A</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">محلل NDVI والكلوروفيل</h1>
+                        <p class="text-blue-100">تحليل متقدم للغطاء النباتي وصحة المحاصيل</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="text-sm">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-400 rounded-full pulse-animation ml-2"></div>
+                            <span>تحليل نشط</span>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        <span class="bg-green-500 px-3 py-1 rounded-full">AI جاهز</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Analysis Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <!-- NDVI Status -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">NDVI</h3>
+                        <p class="text-3xl font-bold text-green-600">0.78</p>
+                        <p class="text-sm text-gray-600">غطاء نباتي ممتاز</p>
+                    </div>
+                    <div class="value-indicator excellent w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <span class="text-2xl">🌱</span>
+                    </div>
+                </div>
+                <div class="ndvi-gradient spectral-bar"></div>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>ضعيف (0.0)</span>
+                    <span>ممتاز (1.0)</span>
+                </div>
+            </div>
+
+            <!-- Chlorophyll Content -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">الكلوروفيل</h3>
+                        <p class="text-3xl font-bold text-green-600">45.2</p>
+                        <p class="text-sm text-gray-600">مستوى ممتاز</p>
+                    </div>
+                    <div class="value-indicator excellent w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <span class="text-2xl">🍃</span>
+                    </div>
+                </div>
+                <div class="chlorophyll-gradient spectral-bar"></div>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>منخفض (0)</span>
+                    <span>عالي (100)</span>
+                </div>
+            </div>
+
+            <!-- NDWI -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">NDWI</h3>
+                        <p class="text-3xl font-bold text-blue-600">0.45</p>
+                        <p class="text-sm text-gray-600">رطوبة متوسطة</p>
+                    </div>
+                    <div class="value-indicator good w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <span class="text-2xl">💧</span>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 spectral-bar"></div>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>جاف (-1.0)</span>
+                    <span>رطب (1.0)</span>
+                </div>
+            </div>
+
+            <!-- NDRE -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">NDRE</h3>
+                        <p class="text-3xl font-bold text-purple-600">0.62</p>
+                        <p class="text-sm text-gray-600">كلوروفيل جيد</p>
+                    </div>
+                    <div class="value-indicator good w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                        <span class="text-2xl">🔬</span>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-red-500 via-orange-500 to-green-500 spectral-bar"></div>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>منخفض (-1.0)</span>
+                    <span>عالي (1.0)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Analysis Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column - Spectral Analysis -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Satellite Image Analysis -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">🛰️ تحليل الصور متعددة الأطياف</h2>
+                        <div class="flex space-x-2 space-x-reverse">
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">تحديث</button>
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">تحليل جديد</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Display -->
+                    <div class="relative bg-gray-100 rounded-lg h-80 mb-6 overflow-hidden">
+                        <div class="analysis-overlay absolute inset-0 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <div class="text-6xl mb-4">🛰️</div>
+                                <h3 class="text-xl font-semibold mb-2">صورة Sentinel-2 متعددة الأطياف</h3>
+                                <p class="text-sm opacity-90">المزرعة الشمالية - 28 سبتمبر 2024</p>
+                                <div class="mt-6 grid grid-cols-4 gap-4 text-sm">
+                                    <div class="bg-blue-500 bg-opacity-50 p-3 rounded-lg">
+                                        <div class="font-semibold">NIR</div>
+                                        <div class="text-blue-200">0.8μm</div>
+                                    </div>
+                                    <div class="bg-red-500 bg-opacity-50 p-3 rounded-lg">
+                                        <div class="font-semibold">Red</div>
+                                        <div class="text-red-200">0.66μm</div>
+                                    </div>
+                                    <div class="bg-green-500 bg-opacity-50 p-3 rounded-lg">
+                                        <div class="font-semibold">Green</div>
+                                        <div class="text-green-200">0.56μm</div>
+                                    </div>
+                                    <div class="bg-purple-500 bg-opacity-50 p-3 rounded-lg">
+                                        <div class="font-semibold">Red Edge</div>
+                                        <div class="text-purple-200">0.73μm</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spectral Bands Analysis -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">تحليل الأطياف</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>الأشعة تحت الحمراء القريبة (NIR)</span>
+                                        <span>0.85</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>الضوء الأحمر</span>
+                                        <span>0.32</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-red-500 h-2 rounded-full" style="width: 32%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>الضوء الأخضر</span>
+                                        <span>0.45</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>الحافة الحمراء</span>
+                                        <span>0.68</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 68%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">المؤشرات المحسوبة</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div>
+                                        <div class="font-semibold">NDVI</div>
+                                        <div class="text-sm text-gray-600">مؤشر الفرق النباتي الطبيعي</div>
+                                    </div>
+                                    <div class="text-2xl font-bold text-green-600">0.78</div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div>
+                                        <div class="font-semibold">NDWI</div>
+                                        <div class="text-sm text-gray-600">مؤشر الفرق المائي الطبيعي</div>
+                                    </div>
+                                    <div class="text-2xl font-bold text-blue-600">0.45</div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div>
+                                        <div class="font-semibold">NDRE</div>
+                                        <div class="text-sm text-gray-600">مؤشر الحافة الحمراء</div>
+                                    </div>
+                                    <div class="text-2xl font-bold text-purple-600">0.62</div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-white rounded-lg">
+                                    <div>
+                                        <div class="font-semibold">Chlorophyll</div>
+                                        <div class="text-sm text-gray-600">محتوى الكلوروفيل</div>
+                                    </div>
+                                    <div class="text-2xl font-bold text-green-600">45.2</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Temporal Analysis -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">📈 التحليل الزمني</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- NDVI Trend -->
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">اتجاه NDVI (آخر 30 يوم)</h3>
+                            <div class="bg-gray-50 rounded-lg p-4 h-64 flex items-center justify-center">
+                                <canvas id="ndviTrendChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Chlorophyll Trend -->
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">اتجاه الكلوروفيل</h3>
+                            <div class="bg-gray-50 rounded-lg p-4 h-64 flex items-center justify-center">
+                                <canvas id="chlorophyllTrendChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Analysis Tools -->
+            <div class="space-y-8">
+                <!-- Analysis Tools -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">🔧 أدوات التحليل</h2>
+                    
+                    <div class="space-y-4">
+                        <button class="w-full bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 transition-colors text-right">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold">تحليل NDVI</div>
+                                    <div class="text-sm opacity-90">تحليل مؤشر الفرق النباتي</div>
+                                </div>
+                                <span class="text-2xl">🌱</span>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 transition-colors text-right">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold">تحليل الكلوروفيل</div>
+                                    <div class="text-sm opacity-90">قياس محتوى الكلوروفيل</div>
+                                </div>
+                                <span class="text-2xl">🍃</span>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 transition-colors text-right">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold">تحليل الإجهاد</div>
+                                    <div class="text-sm opacity-90">كشف الإجهاد المائي</div>
+                                </div>
+                                <span class="text-2xl">💧</span>
+                            </div>
+                        </button>
+
+                        <button class="w-full bg-orange-600 text-white p-4 rounded-lg hover:bg-orange-700 transition-colors text-right">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold">تحليل النمو</div>
+                                    <div class="text-sm opacity-90">مراقبة نمو المحاصيل</div>
+                                </div>
+                                <span class="text-2xl">📈</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Health Assessment -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">🏥 تقييم الصحة</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-green-800">صحة ممتازة</div>
+                                    <div class="text-sm text-green-600">NDVI > 0.7</div>
+                                </div>
+                                <div class="text-2xl">✅</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-blue-800">كلوروفيل جيد</div>
+                                    <div class="text-sm text-blue-600">مستوى عالي</div>
+                                </div>
+                                <div class="text-2xl">🍃</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-yellow-800">رطوبة متوسطة</div>
+                                    <div class="text-sm text-yellow-600">مراقبة مستمرة</div>
+                                </div>
+                                <div class="text-2xl">⚠️</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-semibold text-purple-800">نمو طبيعي</div>
+                                    <div class="text-sm text-purple-600">اتجاه إيجابي</div>
+                                </div>
+                                <div class="text-2xl">📈</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">💡 التوصيات</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-green-50 border-r-4 border-green-400 rounded-lg">
+                            <div class="font-semibold text-green-800">ممتاز</div>
+                            <div class="text-sm text-green-600">الغطاء النباتي في حالة ممتازة</div>
+                        </div>
+
+                        <div class="p-3 bg-blue-50 border-r-4 border-blue-400 rounded-lg">
+                            <div class="font-semibold text-blue-800">مراقبة</div>
+                            <div class="text-sm text-blue-600">مراقبة مستمرة للرطوبة</div>
+                        </div>
+
+                        <div class="p-3 bg-yellow-50 border-r-4 border-yellow-400 rounded-lg">
+                            <div class="font-semibold text-yellow-800">انتباه</div>
+                            <div class="text-sm text-yellow-600">زيادة معدل الري بنسبة 5%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Spectral Analysis -->
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🔬 التحليل الطيفي المتقدم</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Spectral Signature -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">التوقيع الطيفي</h3>
+                    <div class="bg-gray-50 rounded-lg p-4 h-64 flex items-center justify-center">
+                        <canvas id="spectralChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Vegetation Health Map -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">خريطة صحة النباتات</h3>
+                    <div class="bg-gray-50 rounded-lg p-4 h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-6xl mb-4">🗺️</div>
+                            <h4 class="text-lg font-semibold mb-2">خريطة NDVI</h4>
+                            <p class="text-sm text-gray-600">توزيع صحة النباتات عبر المزرعة</p>
+                            <div class="mt-4 ndvi-gradient h-4 rounded-full"></div>
+                            <div class="flex justify-between text-xs text-gray-500 mt-2">
+                                <span>ضعيف</span>
+                                <span>ممتاز</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white rounded-lg p-2 ml-3">
+                    <span class="text-xl font-bold text-blue-600">A</span>
+                </div>
+                <h4 class="text-xl font-bold">Adham AgriTech - محلل NDVI</h4>
+            </div>
+            <p class="text-gray-400 mb-4">تحليل متقدم للغطاء النباتي وصحة المحاصيل باستخدام الذكاء الاصطناعي</p>
+            <div class="text-sm text-gray-500">
+                <p>📧 ndvi@adham-agritech.com | 📱 +966 50 123 4567</p>
+                <p class="mt-2">&copy; 2024 Adham AgriTech. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // NDVI Trend Chart
+            const ndviCtx = document.getElementById('ndviTrendChart').getContext('2d');
+            new Chart(ndviCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1/9', '5/9', '10/9', '15/9', '20/9', '25/9', '28/9'],
+                    datasets: [{
+                        label: 'NDVI',
+                        data: [0.72, 0.75, 0.78, 0.76, 0.79, 0.77, 0.78],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 0.5,
+                            max: 1.0
+                        }
+                    }
+                }
+            });
+
+            // Chlorophyll Trend Chart
+            const chlorophyllCtx = document.getElementById('chlorophyllTrendChart').getContext('2d');
+            new Chart(chlorophyllCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1/9', '5/9', '10/9', '15/9', '20/9', '25/9', '28/9'],
+                    datasets: [{
+                        label: 'Chlorophyll',
+                        data: [42.1, 43.5, 44.8, 43.2, 45.1, 44.6, 45.2],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 35,
+                            max: 50
+                        }
+                    }
+                }
+            });
+
+            // Spectral Signature Chart
+            const spectralCtx = document.getElementById('spectralChart').getContext('2d');
+            new Chart(spectralCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Blue', 'Green', 'Red', 'Red Edge', 'NIR', 'SWIR1', 'SWIR2'],
+                    datasets: [{
+                        label: 'Spectral Reflectance',
+                        data: [0.15, 0.25, 0.32, 0.68, 0.85, 0.45, 0.38],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1.0
+                        }
+                    }
+                }
+            });
+
+            // Add interactive effects
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Simulate real-time updates
+            setInterval(function() {
+                // Update NDVI value slightly
+                const ndviValue = document.querySelector('.text-3xl.font-bold.text-green-600');
+                if (ndviValue && ndviValue.textContent.includes('0.78')) {
+                    const currentValue = parseFloat(ndviValue.textContent);
+                    const newValue = (currentValue + (Math.random() - 0.5) * 0.02).toFixed(2);
+                    ndviValue.textContent = newValue;
+                }
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
