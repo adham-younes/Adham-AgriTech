@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Created-By: Adham AgriTech Development Team
+Application-Name: Adham AgriTech
+Application-Version: 1.0.0
+Application-Description: نظام الزراعة الذكية مع مراقبة الأقمار الصناعية
+
+Name: AndroidManifest.xml
+SHA1-Digest: placeholder
+
+Name: classes.dex
+SHA1-Digest: placeholder
+
+Name: resources.arsc
+SHA1-Digest: placeholder
