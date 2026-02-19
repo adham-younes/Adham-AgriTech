@@ -1,52 +1,54 @@
 # Adham AgriTech
 
-منصة SaaS للزراعة الذكية: توصيات ري يومية، مراقبة إجهاد المحاصيل عبر NDVI، وتقارير إنتاجية المياه.
+منصة SaaS للزراعة الذكية (MVP) تستهدف المزارع الفردي والشركات المتوسطة عبر 3 محاور:
+- **Water-Smart Advisor**: توصيات ري يومية.
+- **Crop Stress Watch**: مراقبة NDVI وتنبيهات الإجهاد.
+- **Monthly Reports**: تقارير إنتاجية المياه (WaPOR) برابط مشاركة.
 
-## Tech Stack
-- Next.js (App Router + TypeScript + Tailwind)
-- Supabase (Postgres/Auth/Storage/RLS/Edge Functions/Cron)
+## Stack
+- Next.js App Router + TypeScript + Tailwind
+- Supabase (Postgres + Auth + Storage + RLS + Edge Functions + Cron)
 - Vercel Hobby
 
-## Project Structure
-- `apps/web`: واجهة الويب (تسويقية + تطبيق داخلي)
-- `packages/lib`: عملاء APIs (NASA POWER, WaPOR, Sentinel)
-- `supabase`: migrations, policies, seed, cron, edge functions
-- `docs`: وثائق المنتج والتشغيل
+## Monorepo Structure
+- `apps/web`: الموقع التسويقي + التطبيق الداخلي
+- `packages/lib`: clients و helpers للتكامل الخارجي
+- `supabase/migrations`: schema SQL
+- `supabase/policies.sql`: RLS policies
+- `supabase/functions`: edge functions
+- `supabase/seed.sql`: خطط + مقالات SEO
+- `supabase/cron.sql`: جداول التشغيل
 
-## Local Setup
-1. ثبت pnpm + Node 20+
-2. انسخ المتغيرات:
-   ```bash
-   cp .env.example .env.local
-   ```
-3. ثبت الحزم:
-   ```bash
-   pnpm install
-   ```
-4. شغل التطبيق:
-   ```bash
-   pnpm dev
-   ```
+## Quick Start
+```bash
+cp .env.example .env.local
+pnpm install
+pnpm dev
+```
 
 ## Supabase Setup
-1. أنشئ مشروع Supabase.
-2. نفذ migration:
-   - `supabase/migrations/202603010001_init.sql`
-   - `supabase/policies.sql`
-3. نفذ seed:
-   - `supabase/seed.sql`
-4. أنشئ bucket باسم `reports`.
-5. انشر edge functions من `supabase/functions/*`.
-6. فعّل الجدولة عبر `supabase/cron.sql` مع إعداد:
-   - `app.settings.supabase_functions_base_url`
-   - `app.settings.service_role_key`
+1. نفّذ migration: `supabase/migrations/202603010001_init.sql`
+2. فعّل RLS policies: `supabase/policies.sql`
+3. حمّل seed: `supabase/seed.sql`
+4. أنشئ storage bucket باسم `reports`
+5. انشر functions الموجودة في `supabase/functions/*`
+6. طبّق cron في `supabase/cron.sql`
 
-## Vercel Deployment
-1. اربط المستودع مع Vercel.
-2. عيّن كل متغيرات البيئة من `.env.example`.
-3. استخدم Build Command: `pnpm build`.
+## Key MVP UX Delivered
+- Marketing pages: `/`, `/pricing`, `/docs`, `/about`, `/contact`
+- App pages: `/app`, `/app/farms`, `/app/farms/[farmId]`, `/app/fields/[fieldId]`, `/app/reports`
+- Public report route: `/r/[publicToken]`
+- Dashboard يحتوي: Weather card, Irrigation recommendation, Alerts, NDVI chart
+- Farms/Fields يحتوي: map preview + field insights
 
 ## Free-tier Guardrails
-- الصفحات تقرأ من جداول cache الداخلية فقط.
-- التحديثات الخارجية تتم عبر Cron/Edge Functions.
-- زر Refresh يجب أن يكون محدود quota حسب `plan_limits`.
+- لا استدعاء APIs خارجية في page request.
+- التحديث عبر cron + edge functions فقط.
+- استخدام cache tables (`external_api_cache`) وتقليل عدد الطلبات.
+- قيود الباقات عبر `plan_limits` + `usage_events`.
+
+## CI
+GitHub Actions يشغّل:
+- lint
+- typecheck
+- test

@@ -156,3 +156,23 @@ create view public.public_reports as
 select public_token, month, type, status, artifact_url, payload, created_at
 from public.reports
 where status = 'ready';
+
+create table public.external_api_cache (
+  id uuid primary key default gen_random_uuid(),
+  provider text not null,
+  cache_key text not null unique,
+  payload jsonb not null,
+  expires_at timestamptz not null,
+  created_at timestamptz not null default now()
+);
+
+create table public.usage_events (
+  id uuid primary key default gen_random_uuid(),
+  org_id uuid not null references public.organizations(id) on delete cascade,
+  event_type text not null,
+  units int not null default 1,
+  event_date date not null default current_date,
+  created_at timestamptz not null default now()
+);
+
+create index usage_events_org_event_idx on public.usage_events (org_id, event_type, event_date);
