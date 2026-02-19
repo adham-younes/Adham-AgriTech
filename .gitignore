@@ -1,0 +1,9 @@
+node_modules
+.pnpm-store
+.next
+.env
+.env.local
+coverage
+.playwright
+supabase/.temp
+apps/web/tsconfig.tsbuildinfo
