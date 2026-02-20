@@ -1,9 +1,11 @@
 create extension if not exists pg_cron;
 create extension if not exists pg_net;
 
+select cron.unschedule(jobid) from cron.job where jobname in ('daily-weather-job','weekly-ndvi-job','monthly-report-job');
+
 select cron.schedule(
   'daily-weather-job',
-  '0 5 * * *',
+  '15 5 * * *',
   $$
   select net.http_post(
     url := current_setting('app.settings.supabase_functions_base_url') || '/fetch-weather-daily',
@@ -15,7 +17,7 @@ select cron.schedule(
 
 select cron.schedule(
   'weekly-ndvi-job',
-  '0 6 * * 1',
+  '45 5 * * 1',
   $$
   select net.http_post(
     url := current_setting('app.settings.supabase_functions_base_url') || '/fetch-ndvi',
@@ -27,7 +29,7 @@ select cron.schedule(
 
 select cron.schedule(
   'monthly-report-job',
-  '0 7 1 * *',
+  '20 6 1 * *',
   $$
   select net.http_post(
     url := current_setting('app.settings.supabase_functions_base_url') || '/generate-report-monthly',
