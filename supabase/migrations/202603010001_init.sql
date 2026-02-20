@@ -163,7 +163,8 @@ create table public.external_api_cache (
   cache_key text not null unique,
   payload jsonb not null,
   expires_at timestamptz not null,
-  created_at timestamptz not null default now()
+  created_at timestamptz not null default now(),
+  check (expires_at > created_at)
 );
 
 create table public.usage_events (
@@ -175,4 +176,86 @@ create table public.usage_events (
   created_at timestamptz not null default now()
 );
 
+create table public.job_runs (
+  id uuid primary key default gen_random_uuid(),
+  job_name text not null,
+  status text not null check (status in ('success','failed')),
+  latency_ms int not null check (latency_ms >= 0),
+  details jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 create index usage_events_org_event_idx on public.usage_events (org_id, event_type, event_date);
+create index external_api_cache_provider_expires_idx on public.external_api_cache (provider, expires_at desc);
+create index job_runs_job_name_created_idx on public.job_runs (job_name, created_at desc);
+
+create or replace function public.within_plan_limit(target_org uuid, target_event_type text, from_date date)
+returns boolean
+language plpgsql
+stable
+as $$
+declare
+  plan_record public.plan_limits;
+  used_units int;
+begin
+  select pl.*
+  into plan_record
+  from public.organizations o
+  join public.plan_limits pl on pl.plan = o.plan
+  where o.id = target_org;
+
+  if plan_record.plan is null then
+    return false;
+  end if;
+
+  select coalesce(sum(ue.units), 0)
+  into used_units
+  from public.usage_events ue
+  where ue.org_id = target_org
+    and ue.event_type = target_event_type
+    and ue.event_date >= from_date;
+
+  if target_event_type = 'ndvi_check' then
+    return used_units < plan_record.ndvi_checks_per_month;
+  elsif target_event_type = 'monthly_report' then
+    return used_units < plan_record.reports_per_month;
+  else
+    return true;
+  end if;
+end;
+$$;
+
+create or replace function public.enforce_fields_limit()
+returns trigger
+language plpgsql
+as $$
+declare
+  target_org uuid;
+  fields_limit int;
+  fields_count int;
+begin
+  select f.org_id into target_org from public.farms f where f.id = new.farm_id;
+
+  select pl.fields_limit
+  into fields_limit
+  from public.organizations o
+  join public.plan_limits pl on pl.plan = o.plan
+  where o.id = target_org;
+
+  select count(*) into fields_count
+  from public.fields fd
+  join public.farms fm on fm.id = fd.farm_id
+  where fm.org_id = target_org;
+
+  if fields_count >= fields_limit then
+    raise exception 'plan field limit exceeded for org %', target_org;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_enforce_fields_limit on public.fields;
+create trigger trg_enforce_fields_limit
+before insert on public.fields
+for each row execute procedure public.enforce_fields_limit();
