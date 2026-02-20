@@ -2,7 +2,12 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
+  const cronSecret = Deno.env.get('SUPABASE_CRON_SECRET');
+  if (!cronSecret || (req.headers.get('authorization') ?? '') !== `Bearer ${cronSecret}`) {
+    return new Response(JSON.stringify({ ok: false, error: 'forbidden' }), { status: 403 });
+  }
+
   const [orgs, fields, alerts] = await Promise.all([
     supabase.from('organizations').select('id', { count: 'exact', head: true }),
     supabase.from('fields').select('id', { count: 'exact', head: true }),
