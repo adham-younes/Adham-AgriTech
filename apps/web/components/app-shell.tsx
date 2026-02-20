@@ -39,7 +39,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block rounded-xl px-4 py-3 text-sm font-semibold ${
+                className={`focus-ring block rounded-xl px-4 py-3 text-sm font-semibold ${
                   active
                     ? 'bg-emerald-500/15 text-emerald-300 shadow-[inset_0_0_16px_rgba(16,185,129,0.15)]'
                     : 'text-slate-300 hover:bg-white/5 hover:text-emerald-300'
@@ -59,7 +59,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="min-w-0">
-        <header className="sticky top-0 z-40 border-b border-white/10 bg-[#030a05]/80 px-5 py-4 backdrop-blur-xl md:px-8">
+        <header className="sticky top-0 z-40 border-b border-white/10 bg-[var(--bg-base)]/90 px-5 py-4 backdrop-blur-xl md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-xs text-slate-400">منصة تشغيل زراعية لحظية</p>
@@ -67,7 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
             <div className="flex items-center gap-2">
               <span className="agri-badge">API Sync: Active</span>
-              <Link href="/app/reports" className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-bold text-[#04250b] hover:bg-emerald-400">
+              <Link href="/app/reports" className="focus-ring rounded-xl bg-emerald-500 px-4 py-2 text-sm font-bold text-[#04250b] hover:bg-emerald-400">
                 إنشاء تقرير
               </Link>
             </div>
