@@ -26,13 +26,19 @@ pnpm install
 pnpm dev
 ```
 
+## Environment & Secrets
+- المتغيرات التي تبدأ بـ `NEXT_PUBLIC_` فقط هي المسموح ظهورها في المتصفح.
+- `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_CRON_SECRET`, `SENTINEL_HUB_CLIENT_SECRET` أسرار تشغيلية: لا توضع في الواجهة ولا في السجلات.
+- Edge Functions تعيد رسائل خطأ عامة (`internal_error` / `forbidden_or_rate_limited`) بدون تسريب provider payload أو مفاتيح.
+- لضبط الحدود التشغيلية استخدم متغيرات rate limit في `.env.local` (انظر `.env.example`).
+
 ## Supabase Setup
-1. نفّذ migration: `supabase/migrations/202603010001_init.sql`
-2. فعّل RLS policies: `supabase/policies.sql`
-3. حمّل seed: `supabase/seed.sql`
-4. أنشئ storage bucket باسم `reports`
-5. انشر functions الموجودة في `supabase/functions/*`
-6. طبّق cron في `supabase/cron.sql`
+1. نفّذ كل ملفات `supabase/migrations/*.sql` بالترتيب (يتضمن جداول audit + rate limit).
+2. فعّل RLS policies: `supabase/policies.sql`.
+3. حمّل seed: `supabase/seed.sql`.
+4. أنشئ storage bucket باسم `reports`.
+5. انشر functions الموجودة في `supabase/functions/*`.
+6. فعّل cron في `supabase/cron.sql` مع تمرير `Authorization: Bearer $SUPABASE_CRON_SECRET`.
 
 ## Key MVP UX Delivered
 - Marketing pages: `/`, `/pricing`, `/docs`, `/about`, `/contact`

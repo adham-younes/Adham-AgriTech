@@ -63,9 +63,15 @@ create policy "public read plan limits" on public.plan_limits for select using (
 
 alter view public.public_reports set (security_invoker = true);
 grant select on public.public_reports to anon, authenticated;
+
 alter table public.external_api_cache enable row level security;
 alter table public.usage_events enable row level security;
+alter table public.rate_limit_counters enable row level security;
+alter table public.audit_logs enable row level security;
 
 create policy "service manages external cache" on public.external_api_cache for all to service_role using (true) with check (true);
 create policy "members read usage" on public.usage_events for select using (public.is_org_member(org_id));
 create policy "service writes usage" on public.usage_events for insert to service_role with check (true);
+create policy "service manages rate limits" on public.rate_limit_counters for all to service_role using (true) with check (true);
+create policy "members read audit logs" on public.audit_logs for select using (org_id is not null and public.is_org_member(org_id));
+create policy "service writes audit logs" on public.audit_logs for insert to service_role with check (true);
