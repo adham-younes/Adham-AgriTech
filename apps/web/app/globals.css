@@ -8,6 +8,34 @@
 
 :root {
   --font-main: 'Tajawal', sans-serif;
+  /* Core color tokens */
+  --agri-bg-base: #030a05;
+  --agri-bg-surface: rgba(255, 255, 255, 0.03);
+  --agri-bg-base-80: rgba(3, 10, 5, 0.8);
+  --agri-bg-surface-hover: rgba(255, 255, 255, 0.05);
+  --agri-bg-elevated: rgba(0, 0, 0, 0.2);
+  --agri-bg-brand: #10b981;
+  --agri-bg-brand-hover: #34d399;
+  --agri-bg-brand-muted: rgba(16, 185, 129, 0.15);
+
+  --agri-border-subtle: rgba(255, 255, 255, 0.1);
+  --agri-border-default: rgba(16, 185, 129, 0.2);
+  --agri-border-strong: rgba(16, 185, 129, 0.4);
+  --agri-focus-ring: rgba(52, 211, 153, 0.45);
+
+  --agri-text-primary: #f1f5f9;
+  --agri-text-secondary: #cbd5e1;
+  --agri-text-muted: #94a3b8;
+  --agri-text-brand: #86efac;
+  --agri-text-on-brand: #04250b;
+
+  --agri-shadow-card: 0 0 30px rgba(5, 199, 5, 0.06);
+  --agri-shadow-glow: inset 0 0 16px rgba(16, 185, 129, 0.15);
+
+  --agri-chart-grid: rgba(148, 163, 184, 0.12);
+  --agri-chart-axis: rgba(148, 163, 184, 0.2);
+  --agri-chart-line: #22c55e;
+  --agri-chart-dot: #34d399;
 }
 
 body {
@@ -16,7 +44,7 @@ body {
   background:
     radial-gradient(circle at 20% 0%, rgba(5, 199, 5, 0.12) 0%, transparent 34%),
     radial-gradient(circle at 80% 100%, rgba(16, 185, 129, 0.1) 0%, transparent 32%),
-    #030a05;
+    var(--agri-bg-base);
 }
 
 .agri-glass {
@@ -24,7 +52,10 @@ body {
 }
 
 .agri-panel {
-  @apply rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_30px_rgba(5,199,5,0.06)];
+  border: 1px solid var(--agri-border-subtle);
+  background: var(--agri-bg-surface);
+  box-shadow: var(--agri-shadow-card);
+  @apply rounded-2xl;
 }
 
 .agri-badge {
@@ -47,4 +78,50 @@ body {
 
 a {
   @apply transition-colors;
+}
+
+@layer utilities {
+  .agri-card {
+    border: 1px solid var(--agri-border-subtle);
+    background: var(--agri-bg-surface);
+    @apply rounded-2xl transition;
+  }
+
+  .agri-card-hover:hover,
+  .agri-card-hover:focus-within {
+    border-color: var(--agri-border-strong);
+    background: var(--agri-bg-surface-hover);
+  }
+
+  .agri-btn {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-bold transition focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .agri-btn:focus-visible {
+    box-shadow: 0 0 0 2px var(--agri-focus-ring);
+  }
+
+  .agri-btn-primary {
+    background: var(--agri-bg-brand);
+    color: var(--agri-text-on-brand);
+    @apply hover:brightness-110;
+  }
+
+  .agri-btn-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--agri-text-secondary);
+    @apply hover:border-emerald-300 hover:text-emerald-300;
+  }
+
+  .agri-text-primary {
+    color: var(--agri-text-primary);
+  }
+
+  .agri-text-secondary {
+    color: var(--agri-text-secondary);
+  }
+
+  .agri-text-muted {
+    color: var(--agri-text-muted);
+  }
 }
