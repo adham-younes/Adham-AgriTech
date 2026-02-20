@@ -1,3 +1,6 @@
+import { Panel } from '@/components/ui/panel';
+import { Card } from '@/components/ui/card';
+
 const rows = [
   { field: 'A-12', crop: 'ذرة', ndvi: 0.81, efficiency: '94%' },
   { field: 'B-03', crop: 'قمح', ndvi: 0.76, efficiency: '89%' },
@@ -7,28 +10,28 @@ const rows = [
 export default function PublicReportPage({ params }: { params: { publicToken: string } }) {
   return (
     <main className="mx-auto min-h-screen w-full max-w-5xl space-y-8 px-6 py-10 text-slate-100">
-      <header className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+      <Card as="header" className="p-6">
         <p className="text-xs text-slate-400">Public Share View</p>
         <h1 className="mt-2 text-3xl font-black">تقرير أثر استهلاك المياه والإنتاجية</h1>
         <p className="mt-2 text-sm text-slate-400">رمز الوصول: {params.publicToken}</p>
-      </header>
+      </Card>
 
       <section className="grid gap-4 md:grid-cols-3">
-        <article className="agri-panel p-5">
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">المياه الموفرة</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">1.2M L</p>
-        </article>
-        <article className="agri-panel p-5">
+        </Panel>
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">متوسط NDVI</p>
           <p className="mt-2 text-3xl font-black text-slate-100">0.82</p>
-        </article>
-        <article className="agri-panel p-5">
+        </Panel>
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">تحسن الإنتاجية</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">+18.5%</p>
-        </article>
+        </Panel>
       </section>
 
-      <section className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+      <Card as="section" className="overflow-hidden">
         <div className="border-b border-white/10 p-5">
           <h2 className="text-xl font-black">ملخص الأداء على مستوى الحقل</h2>
         </div>
@@ -54,7 +57,7 @@ export default function PublicReportPage({ params }: { params: { publicToken: st
             </tbody>
           </table>
         </div>
-      </section>
+      </Card>
     </main>
   );
 }

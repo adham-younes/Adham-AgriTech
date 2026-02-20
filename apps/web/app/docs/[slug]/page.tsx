@@ -1,3 +1,4 @@
+import { Panel } from '@/components/ui/panel';
 import { articles } from '@/lib/articles';
 
 export default function DocDetailPage({ params }: { params: { slug: string } }) {
@@ -9,14 +10,14 @@ export default function DocDetailPage({ params }: { params: { slug: string } }) 
       <h1 className="text-4xl font-black">{article.title}</h1>
       <p className="text-slate-300">{article.excerpt}</p>
 
-      <article className="agri-panel p-5">
+      <Panel as="article" className="p-5">
         <h2 className="mb-3 text-xl font-black">خطوات تطبيقية سريعة</h2>
         <ol className="list-decimal space-y-2 pr-5 text-slate-200">
           <li>راجع بيانات الطقس اليومية للحقل.</li>
           <li>قارن NDVI الحالي مع متوسط آخر 3 أسابيع.</li>
           <li>عدّل جرعة الري بنسبة 10% حسب حالة الإجهاد.</li>
         </ol>
-      </article>
+      </Panel>
     </main>
   );
 }

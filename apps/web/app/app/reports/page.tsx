@@ -1,4 +1,6 @@
 import { ReportCard } from '@/components/reports/report-card';
+import { Button } from '@/components/ui/button';
+import { Panel } from '@/components/ui/panel';
 
 const reports = [
   { title: 'تقرير إنتاجية المياه - مزرعة الوادي', month: 'يناير 2026', status: 'ready', efficiency: 94, waterUsage: '450k L' },
@@ -16,22 +18,22 @@ export default function ReportsPage() {
           <h1 className="text-3xl font-black">التقارير الشهرية</h1>
           <p className="mt-1 text-sm text-slate-400">تقارير احترافية قابلة للتنزيل والمشاركة مع أصحاب المصلحة.</p>
         </div>
-        <button className="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-[#03200a] hover:bg-emerald-300">إنشاء تقرير جديد</button>
+        <Button type="button">إنشاء تقرير جديد</Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <article className="agri-panel p-5">
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">إجمالي التقارير</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{reports.length}</p>
-        </article>
-        <article className="agri-panel p-5">
+        </Panel>
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">جاهز للتنزيل</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">{readyCount}</p>
-        </article>
-        <article className="agri-panel p-5">
+        </Panel>
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">نطاق التقرير</p>
           <p className="mt-2 text-3xl font-black text-slate-100">NDVI + Water</p>
-        </article>
+        </Panel>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
