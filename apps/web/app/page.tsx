@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const revalidate = 3600;
+
 const features = [
   {
     title: 'Daily Irrigation Advice',

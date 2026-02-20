@@ -1,3 +1,5 @@
+export const revalidate = 300;
+
 import { ReportCard } from '@/components/reports/report-card';
 
 const reports = [

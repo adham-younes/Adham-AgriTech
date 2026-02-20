@@ -1,3 +1,5 @@
+export const revalidate = 3600;
+
 import { articles } from '@/lib/articles';
 
 export default function DocDetailPage({ params }: { params: { slug: string } }) {
