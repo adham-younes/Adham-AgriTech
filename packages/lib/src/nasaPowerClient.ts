@@ -1,4 +1,6 @@
+import { mapHttpError } from './errors';
 import { buildCacheKey, ensureRateLimit, fetchWithRetry } from './http';
+import { parseNasaPowerDaily } from './parsers';
 
 export async function getNasaDailyWeather(lat: number, lng: number, date: string) {
   ensureRateLimit('nasa-power', 30, 60_000);
@@ -13,6 +15,11 @@ export async function getNasaDailyWeather(lat: number, lng: number, date: string
     end: date.replaceAll('-', ''),
     format: 'JSON'
   });
-  const res = await fetchWithRetry(`${base}?${params.toString()}`);
-  return { cacheKey, payload: await res.json() };
+  try {
+    const res = await fetchWithRetry(`${base}?${params.toString()}`);
+    const payload = await res.json();
+    return { cacheKey, payload, metrics: parseNasaPowerDaily(payload, date) };
+  } catch (error) {
+    throw mapHttpError(error, 'nasaPowerClient');
+  }
 }
