@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import { MapPreview } from '@/components/maps/map-preview';
 import { fields, farms } from '@/lib/demo-data';
+import { Badge } from '@/components/ui/badge';
+import { ButtonLink } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Panel } from '@/components/ui/panel';
 
 export default function FarmDetailsPage({ params }: { params: { farmId: string } }) {
   const farm = farms.find((item) => item.id === params.farmId);
@@ -16,39 +20,39 @@ export default function FarmDetailsPage({ params }: { params: { farmId: string }
     <section className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="agri-badge">{farm.governorate}</span>
+          <Badge>{farm.governorate}</Badge>
           <h1 className="mt-2 text-3xl font-black">{farm.name}</h1>
           <p className="mt-1 text-sm text-slate-400">متابعة مباشرة للحقول، المؤشرات، والتوصيات اليومية.</p>
         </div>
-        <Link href="/app/farms" className="rounded-xl border border-white/15 px-4 py-2 text-sm font-semibold text-slate-200 hover:border-emerald-300 hover:text-emerald-300">
+        <ButtonLink href="/app/farms" variant="outline">
           العودة لإدارة المزارع
-        </Link>
+        </ButtonLink>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <article className="agri-panel p-5">
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">عدد الحقول</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">{farmFields.length}</p>
-        </article>
-        <article className="agri-panel p-5">
+        </Panel>
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">المساحة الإجمالية</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{totalArea.toFixed(1)} ha</p>
-        </article>
-        <article className="agri-panel p-5">
+        </Panel>
+        <Panel as="article" className="p-5">
           <p className="text-xs text-slate-400">متوسط NDVI الحالي</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{avgNdvi.toFixed(2)}</p>
-        </article>
+        </Panel>
       </div>
 
-      <article className="agri-panel overflow-hidden p-4">
+      <Panel as="article" className="overflow-hidden p-4">
         {farmFields[0] ? <MapPreview lat={farmFields[0].centroidLat} lng={farmFields[0].centroidLng} height={360} /> : null}
-      </article>
+      </Panel>
 
       <div className="grid gap-4 md:grid-cols-2">
         {farmFields.map((field) => {
           const latestNdvi = field.ndviSeries.at(-1)?.value ?? 0;
           return (
-            <article key={field.id} className="agri-panel p-5">
+            <Panel key={field.id} as="article" className="p-5">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
                   <h3 className="text-xl font-black text-slate-100">{field.name}</h3>
@@ -56,24 +60,24 @@ export default function FarmDetailsPage({ params }: { params: { farmId: string }
                     {field.cropType} • {field.areaHa} هكتار
                   </p>
                 </div>
-                <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-300">NDVI {latestNdvi.toFixed(2)}</span>
+                <Badge variant="status">NDVI {latestNdvi.toFixed(2)}</Badge>
               </div>
 
               <div className="mb-4 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <Card className="bg-black/20 p-3">
                   <p className="text-slate-400">توصية الري</p>
                   <p className="mt-1 font-black text-slate-100">{field.irrigationToday.recommendedMm} مم</p>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                </Card>
+                <Card className="bg-black/20 p-3">
                   <p className="text-slate-400">درجة الحرارة</p>
                   <p className="mt-1 font-black text-slate-100">{field.weatherToday.tempC}°</p>
-                </div>
+                </Card>
               </div>
 
               <Link href={`/app/fields/${field.id}`} className="text-sm font-black text-emerald-300 hover:text-emerald-200">
                 فتح شاشة الحقل
               </Link>
-            </article>
+            </Panel>
           );
         })}
       </div>

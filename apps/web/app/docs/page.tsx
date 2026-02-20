@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Panel } from '@/components/ui/panel';
 import { articles } from '@/lib/articles';
 
 export default function DocsPage() {
@@ -11,9 +12,11 @@ export default function DocsPage() {
 
       <section className="grid gap-4">
         {articles.map((article) => (
-          <Link key={article.slug} href={`/docs/${article.slug}`} className="agri-panel block p-5 hover:border-emerald-400/40">
-            <h2 className="text-xl font-black text-slate-100">{article.title}</h2>
-            <p className="mt-2 text-slate-300">{article.excerpt}</p>
+          <Link key={article.slug} href={`/docs/${article.slug}`} className="block">
+            <Panel as="article" className="p-5 hover:border-emerald-400/40">
+              <h2 className="text-xl font-black text-slate-100">{article.title}</h2>
+              <p className="mt-2 text-slate-300">{article.excerpt}</p>
+            </Panel>
           </Link>
         ))}
       </section>

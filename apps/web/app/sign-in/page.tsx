@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function SignInPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-400 text-xl font-black text-[#04210b]">A</div>
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-400 text-xl font-black text-agri-ink">A</div>
           <h1 className="text-3xl font-black text-slate-100">تسجيل الدخول</h1>
           <p className="mt-2 text-sm text-slate-400">وصول آمن إلى لوحة إدارة المزرعة الذكية.</p>
         </div>
@@ -36,9 +37,9 @@ export default function SignInPage() {
               />
             </div>
 
-            <button className="w-full rounded-xl bg-emerald-400 px-4 py-3 text-sm font-black text-[#03200a] hover:bg-emerald-300" type="submit">
+            <Button className="w-full py-3" type="submit">
               دخول لوحة التحكم
-            </button>
+            </Button>
           </form>
 
           <div className="mt-4 flex items-center justify-between text-sm">
