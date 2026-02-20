@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { primaryCtaLabel, unifiedValueProposition } from '@/lib/ux-copy';
 
 const features = [
   {
@@ -15,11 +16,7 @@ const features = [
   }
 ];
 
-const steps = [
-  'أضف المزارع والحقول وحدودها',
-  'تجميع بيانات الطقس وNDVI آليًا',
-  'استلام قرار تشغيل يومي قابل للتنفيذ'
-];
+const steps = ['أضف المزارع والحقول وحدودها', 'تجميع بيانات الطقس وNDVI آليًا', 'استلام قرار تشغيل يومي قابل للتنفيذ'];
 
 export default function LandingPage() {
   return (
@@ -49,7 +46,7 @@ export default function LandingPage() {
               تسجيل الدخول
             </Link>
             <Link href="/app" className="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-bold text-[#03210a] hover:bg-emerald-300">
-              ابدأ الآن
+              {primaryCtaLabel}
             </Link>
           </div>
         </div>
@@ -62,12 +59,10 @@ export default function LandingPage() {
             منصة تشغيل زراعي ذكية
             <span className="block text-emerald-300">تجمع القرار، التنفيذ، والمتابعة</span>
           </h1>
-          <p className="max-w-2xl text-lg text-slate-300">
-            واجهة موحدة لإدارة الحقول، توصيات ري يومية، وتنبيهات NDVI مع تقارير شهرية جاهزة. مصممة لتقليل الهدر ورفع إنتاجية المياه.
-          </p>
+          <p className="max-w-2xl text-lg leading-relaxed text-slate-300">{unifiedValueProposition}</p>
           <div className="flex flex-wrap gap-3">
             <Link href="/app" className="rounded-2xl bg-emerald-400 px-6 py-3 text-base font-black text-[#04210a] hover:bg-emerald-300">
-              دخول لوحة التحكم
+              {primaryCtaLabel}
             </Link>
             <Link href="/docs" className="rounded-2xl border border-white/20 px-6 py-3 text-base font-semibold text-slate-200 hover:border-emerald-400 hover:text-emerald-300">
               استعراض قاعدة المعرفة
@@ -115,7 +110,7 @@ export default function LandingPage() {
         <div className="mb-10 flex items-end justify-between gap-5">
           <h2 className="text-3xl font-black">ميزات تشغيلية فعلية</h2>
           <Link href="/app" className="text-sm font-bold text-emerald-300 hover:text-emerald-200">
-            جرّب اللوحة الآن
+            {primaryCtaLabel}
           </Link>
         </div>
         <div className="grid gap-5 md:grid-cols-3">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { farms, fields, planLimits } from '@/lib/demo-data';
+import { resolveUiState, unifiedValueProposition } from '@/lib/ux-copy';
 
 function cropLabel(value: string) {
   const map: Record<string, string> = {
@@ -9,20 +10,55 @@ function cropLabel(value: string) {
   return map[value] ?? value;
 }
 
-export default function FarmsPage() {
+export default function FarmsPage({ searchParams }: { searchParams?: { state?: string } }) {
+  const uiState = resolveUiState(searchParams?.state);
+
+  if (uiState === 'loading') {
+    return (
+      <section className="space-y-6" aria-busy="true">
+        <div className="h-20 animate-pulse rounded-2xl bg-white/10" />
+        <div className="grid gap-4 md:grid-cols-3">
+          {[...Array(3)].map((_, idx) => (
+            <div key={idx} className="h-32 animate-pulse rounded-2xl bg-white/10" />
+          ))}
+        </div>
+        <div className="h-96 animate-pulse rounded-2xl bg-white/10" />
+      </section>
+    );
+  }
+
+  if (uiState === 'error') {
+    return (
+      <section className="agri-panel space-y-4 p-6 text-right">
+        <h1 className="text-2xl font-black text-rose-300">خطأ في تحميل المزارع</h1>
+        <p className="text-slate-300">تعذّر الوصول إلى بيانات الحقول أو حدود الخطة الحالية.</p>
+        <button className="w-fit rounded-xl bg-rose-500 px-4 py-2 text-sm font-bold text-white hover:bg-rose-400">إعادة المحاولة</button>
+      </section>
+    );
+  }
+
+  if (uiState === 'empty') {
+    return (
+      <section className="agri-panel space-y-4 p-6 text-right">
+        <h1 className="text-2xl font-black">لا توجد مزارع مسجلة بعد</h1>
+        <p className="text-slate-300">ابدأ بإضافة أول مزرعة لعرض المساحة، الحقول، والمؤشرات التشغيلية.</p>
+        <button className="w-fit rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-[#03220a] hover:bg-emerald-300">إضافة مزرعة جديدة</button>
+      </section>
+    );
+  }
+
   const currentPlan = 'free';
   const totalFields = fields.length;
   const canCreateMore = totalFields < planLimits[currentPlan].fields;
   const totalArea = fields.reduce((sum, field) => sum + field.areaHa, 0);
-  const avgNdvi =
-    fields.reduce((sum, field) => sum + (field.ndviSeries.at(-1)?.value ?? 0), 0) / Math.max(fields.length, 1);
+  const avgNdvi = fields.reduce((sum, field) => sum + (field.ndviSeries.at(-1)?.value ?? 0), 0) / Math.max(fields.length, 1);
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 text-right">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black">إدارة المزارع والحقول</h1>
-          <p className="mt-1 text-sm text-slate-400">عرض تشغيلي موحّد للمزارع، المساحة، وحالة الحقول.</p>
+          <p className="mt-1 max-w-3xl text-sm text-slate-300">{unifiedValueProposition}</p>
         </div>
         <button
           disabled={!canCreateMore}
@@ -36,15 +72,18 @@ export default function FarmsPage() {
         <article className="agri-panel p-5">
           <p className="text-xs text-slate-400">إجمالي المساحة</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{totalArea.toFixed(1)} ha</p>
+          <p className="mt-2 text-xs text-slate-500">آخر مزامنة: اليوم 05:00 ص</p>
         </article>
         <article className="agri-panel p-5">
           <p className="text-xs text-slate-400">عدد الحقول</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">{totalFields}</p>
           <p className="text-xs text-slate-400">الحد بالخطة {planLimits[currentPlan].fields}</p>
+          <p className="mt-2 text-xs text-slate-500">ثقة المطابقة: 98%</p>
         </article>
         <article className="agri-panel p-5">
           <p className="text-xs text-slate-400">متوسط NDVI الحالي</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{avgNdvi.toFixed(2)}</p>
+          <p className="mt-2 text-xs text-slate-500">آخر مزامنة NDVI: أمس</p>
         </article>
       </div>
 

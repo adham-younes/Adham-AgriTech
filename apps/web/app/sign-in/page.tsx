@@ -1,13 +1,14 @@
 import Link from 'next/link';
+import { primaryCtaLabel, unifiedValueProposition } from '@/lib/ux-copy';
 
 export default function SignInPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md space-y-6">
+      <div className="w-full max-w-md space-y-6 text-right">
         <div className="text-center">
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-400 text-xl font-black text-[#04210b]">A</div>
           <h1 className="text-3xl font-black text-slate-100">تسجيل الدخول</h1>
-          <p className="mt-2 text-sm text-slate-400">وصول آمن إلى لوحة إدارة المزرعة الذكية.</p>
+          <p className="mt-2 text-sm text-slate-300">{unifiedValueProposition}</p>
         </div>
 
         <section className="agri-glass rounded-2xl p-6">
@@ -37,7 +38,7 @@ export default function SignInPage() {
             </div>
 
             <button className="w-full rounded-xl bg-emerald-400 px-4 py-3 text-sm font-black text-[#03200a] hover:bg-emerald-300" type="submit">
-              دخول لوحة التحكم
+              {primaryCtaLabel}
             </button>
           </form>
 
@@ -54,7 +55,7 @@ export default function SignInPage() {
         <p className="text-center text-sm text-slate-400">
           لا تملك حسابًا؟
           <Link href="/pricing" className="mr-1 font-bold text-emerald-300 hover:text-emerald-200">
-            ابدأ الخطة المناسبة
+            اختر الخطة المناسبة
           </Link>
         </p>
       </div>
