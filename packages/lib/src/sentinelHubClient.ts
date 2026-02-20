@@ -1,3 +1,4 @@
+import { mapHttpError } from './errors';
 import { buildCacheKey, ensureRateLimit, fetchWithRetry } from './http';
 
 export async function getSentinelNdviPreview(aoiGeoJson: object, dateFrom: string, dateTo: string) {
@@ -5,7 +6,8 @@ export async function getSentinelNdviPreview(aoiGeoJson: object, dateFrom: strin
   const token = process.env.SENTINEL_HUB_ACCESS_TOKEN ?? '';
   const cacheKey = buildCacheKey('sentinel', [dateFrom, dateTo]);
 
-  const res = await fetchWithRetry('https://services.sentinel-hub.com/api/v1/process', {
+  try {
+    const res = await fetchWithRetry('https://services.sentinel-hub.com/api/v1/process', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,5 +23,8 @@ export async function getSentinelNdviPreview(aoiGeoJson: object, dateFrom: strin
     })
   });
 
-  return { cacheKey, image: await res.arrayBuffer() };
+    return { cacheKey, image: await res.arrayBuffer() };
+  } catch (error) {
+    throw mapHttpError(error, 'sentinelHubClient');
+  }
 }

@@ -52,3 +52,7 @@ GitHub Actions يشغّل:
 - lint
 - typecheck
 - test
+
+
+## Engineering Process
+- Definition of Done للـ PRs: `docs/DEFINITION_OF_DONE.md`

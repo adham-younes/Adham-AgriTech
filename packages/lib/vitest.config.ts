@@ -2,17 +2,16 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    include: ['**/*.test.ts'],
+    environment: 'node',
+    include: ['src/**/*.test.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      include: ['lib/**/*.ts'],
-      exclude: ['lib/**/*.test.ts'],
       thresholds: {
-        lines: 5,
-        functions: 20,
-        branches: 20,
-        statements: 5
+        lines: 45,
+        functions: 45,
+        branches: 35,
+        statements: 45
       }
     }
   }
