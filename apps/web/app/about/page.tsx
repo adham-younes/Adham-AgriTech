@@ -1,3 +1,5 @@
+export const revalidate = 3600;
+
 export default function AboutPage() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-4xl space-y-6 px-6 py-10 text-slate-100">
