@@ -55,14 +55,14 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="agri-shell-frame mx-auto min-h-[calc(100vh-16px)] max-w-[1600px] overflow-hidden rounded-[28px] md:grid md:grid-cols-[250px_1fr]">
         <aside className="agri-sidebar flex h-full flex-col px-4 py-5 md:px-5 md:py-6">
           <div className="mb-6 flex items-center gap-3 px-2">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#11d41f] text-[#03200a]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--agri-royal-gold)] text-[var(--agri-ink-strong)]">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 4v16M4 12h16" />
               </svg>
             </div>
             <div>
               <p className="text-2xl font-black leading-5 tracking-tight text-white">Adham Agri</p>
-              <p className="mt-1 text-xs text-emerald-300/80">{copy.subtitle}</p>
+              <p className="agri-green-gold mt-1 text-xs">{copy.subtitle}</p>
             </div>
           </div>
 
@@ -84,10 +84,12 @@ export function AppShell({ children }: { children: ReactNode }) {
 
           <div className="mt-auto pt-6">
             <Panel className="flex items-center gap-3 rounded-2xl p-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100/10 text-emerald-200">OA</div>
+              <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(212,175,55,0.4)] bg-[rgba(143,162,71,0.18)] text-[var(--agri-royal-gold)]">
+                OA
+              </div>
               <div>
                 <p className="text-sm font-bold text-slate-100">{copy.profileName}</p>
-                <p className="text-xs text-emerald-300/75">{copy.profilePlan}</p>
+                <p className="agri-accent text-xs">{copy.profilePlan}</p>
               </div>
             </Panel>
           </div>
@@ -98,9 +100,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-2xl border border-emerald-600/45 bg-emerald-700/20 px-4 py-2 text-sm font-bold text-emerald-200"
+                className="inline-flex items-center gap-2 rounded-2xl border border-[rgba(212,175,55,0.5)] bg-[rgba(143,162,71,0.25)] px-4 py-2 text-sm font-bold text-[var(--agri-royal-gold)]"
               >
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--agri-royal-gold)]" />
                 <span>{copy.farm}</span>
               </button>
               <div className="flex items-center gap-2">
@@ -119,7 +121,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <LanguageToggle />
                 <Link
                   href={addLangParam('/pricing', locale)}
-                  className="inline-flex items-center rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-slate-300 hover:text-emerald-300"
+                  className="inline-flex items-center rounded-xl border border-white/10 px-3 py-2 text-xs font-semibold text-slate-300 hover:text-[var(--agri-royal-gold)]"
                 >
                   {copy.settings}
                 </Link>
@@ -141,7 +143,7 @@ function IconGhostButton({ children, label }: { children: ReactNode; label: stri
     <button
       type="button"
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-black/20 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-300"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-black/20 text-slate-300 hover:border-[rgba(212,175,55,0.48)] hover:text-[var(--agri-royal-gold)]"
     >
       {children}
     </button>

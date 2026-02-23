@@ -16,7 +16,7 @@ export function LanguageToggle() {
   return (
     <Link
       href={href}
-      className="inline-flex items-center rounded-xl border border-white/20 px-3 py-2 text-xs font-bold text-slate-200 hover:border-emerald-300 hover:text-emerald-300"
+      className="inline-flex items-center rounded-xl border border-white/20 px-3 py-2 text-xs font-bold text-slate-200 hover:border-[rgba(212,175,55,0.5)] hover:text-[var(--agri-royal-gold)]"
     >
       {nextLocale === 'ar' ? 'العربية' : 'English'}
     </Link>

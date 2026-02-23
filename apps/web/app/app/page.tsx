@@ -108,13 +108,13 @@ export default async function DashboardPage({
         <Panel as="article" className="p-6">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-3xl font-black text-slate-100">{copy.weatherSnapshot}</h2>
-            <Badge className="bg-emerald-500/20 text-emerald-300">{copy.live}</Badge>
+            <Badge className="agri-live-badge">{copy.live}</Badge>
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{copy.temp}</p>
-              <p className="mt-2 text-6xl font-black text-emerald-300">{field.weatherToday.tempC}°</p>
+              <p className="agri-accent mt-2 text-6xl font-black">{field.weatherToday.tempC}°</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{copy.wind}</p>
@@ -142,15 +142,15 @@ export default async function DashboardPage({
               return (
                 <div
                   key={`ndvi-bar-${index}`}
-                  className={`w-full rounded-t-md ${highlighted ? 'bg-[#19f420]' : 'bg-emerald-700/60'}`}
+                  className={`w-full rounded-t-md ${highlighted ? 'bg-[var(--agri-royal-gold)]' : 'bg-[rgba(143,162,71,0.55)]'}`}
                   style={{ height }}
                 />
               );
             })}
           </div>
           <div className="mt-4 flex items-center justify-between">
-            <p className="text-4xl font-black text-emerald-300">{ndviAvg.toFixed(2)}</p>
-            <p className={`text-lg font-black ${ndviChange >= 0 ? 'text-[#19f420]' : 'text-rose-400'}`}>
+            <p className="agri-accent text-4xl font-black">{ndviAvg.toFixed(2)}</p>
+            <p className={`text-lg font-black ${ndviChange >= 0 ? 'text-[var(--agri-royal-gold)]' : 'text-slate-300'}`}>
               {ndviChange >= 0 ? '+' : ''}
               {ndviChange.toFixed(1)}%
             </p>
@@ -186,7 +186,7 @@ export default async function DashboardPage({
         <Panel as="article" className="p-5">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-3xl font-black text-slate-100">{copy.criticalAlerts}</h2>
-            <ButtonLink href={addLangParam(`/app/fields/${field.id}`, locale)} variant="ghost" className="text-emerald-300">
+            <ButtonLink href={addLangParam(`/app/fields/${field.id}`, locale)} variant="ghost" className="agri-accent">
               {copy.viewAll}
             </ButtonLink>
           </div>
@@ -195,9 +195,9 @@ export default async function DashboardPage({
             {decoratedAlerts.map((alert) => {
               const color =
                 alert.severity >= 4
-                  ? 'border-rose-400/40 bg-rose-500/10'
+                  ? 'border-[rgba(212,175,55,0.5)] bg-[rgba(185,142,44,0.2)]'
                   : alert.severity >= 2
-                    ? 'border-amber-400/40 bg-amber-500/10'
+                    ? 'border-[rgba(143,162,71,0.52)] bg-[rgba(111,127,57,0.23)]'
                     : 'border-slate-300/25 bg-slate-500/10';
               const label = alert.severity >= 4 ? 'High' : alert.severity >= 2 ? 'Medium' : 'Low';
               return (

@@ -6,10 +6,11 @@ type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'dark';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 const variants: Record<ButtonVariant, string> = {
-  solid: 'bg-emerald-400 text-agri-ink-strong hover:bg-emerald-300',
-  outline: 'border border-white/20 text-slate-200 hover:border-emerald-300 hover:text-emerald-300',
-  ghost: 'text-slate-300 hover:text-emerald-300 hover:bg-white/5',
-  dark: 'bg-agri-ink text-emerald-200 hover:bg-[#021607]'
+  solid:
+    'bg-[linear-gradient(135deg,var(--agri-green-gold),var(--agri-royal-gold))] text-agri-ink-strong hover:brightness-110',
+  outline: 'border border-white/20 text-slate-200 hover:border-[rgba(212,175,55,0.5)] hover:text-[var(--agri-royal-gold)]',
+  ghost: 'text-slate-300 hover:text-[var(--agri-royal-gold)] hover:bg-white/5',
+  dark: 'bg-agri-ink text-[var(--agri-royal-gold)] hover:bg-[#17140b]'
 };
 
 const sizes: Record<ButtonSize, string> = {

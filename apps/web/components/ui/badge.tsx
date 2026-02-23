@@ -5,8 +5,8 @@ type BadgeVariant = 'emerald' | 'status' | 'amber' | 'slate';
 
 const variants: Record<BadgeVariant, string> = {
   emerald: 'agri-badge',
-  status: 'rounded-full border border-emerald-400/30 bg-emerald-500/15 text-emerald-300',
-  amber: 'rounded-full border border-amber-400/30 bg-amber-500/15 text-amber-300',
+  status: 'rounded-full border border-[rgba(212,175,55,0.48)] bg-[rgba(111,127,57,0.23)] text-[var(--agri-royal-gold)]',
+  amber: 'rounded-full border border-[rgba(212,175,55,0.48)] bg-[rgba(185,142,44,0.22)] text-[var(--agri-royal-gold)]',
   slate: 'rounded-full border border-slate-400/30 bg-slate-500/15 text-slate-300'
 };
 
