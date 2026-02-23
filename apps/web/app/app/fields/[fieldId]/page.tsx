@@ -1,6 +1,7 @@
 import { NdviChart } from '@/components/dashboard/ndvi-chart';
 import { MapPreview } from '@/components/maps/map-preview';
 import { alerts, fields } from '@/lib/demo-data';
+import { AppSearchParams, localeFromSearchParams, resolveSearchParams } from '@/lib/i18n';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,9 +12,42 @@ function average(values: number[]) {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
-export default function FieldDetailsPage({ params }: { params: { fieldId: string } }) {
-  const field = fields.find((item) => item.id === params.fieldId);
-  if (!field) return <section>الحقل غير موجود.</section>;
+export default async function FieldDetailsPage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ fieldId: string }>;
+  searchParams?: Promise<AppSearchParams>;
+}) {
+  const resolvedParams = await params;
+  const locale = localeFromSearchParams(await resolveSearchParams(searchParams));
+  const field = fields.find((item) => item.id === resolvedParams.fieldId);
+  const copy =
+    locale === 'ar'
+      ? {
+          notFound: 'الحقل غير موجود.',
+          export: 'تصدير تقرير الحقل',
+          latest: 'آخر NDVI',
+          avg: 'متوسط NDVI',
+          humidity: 'رطوبة الهواء',
+          plan: 'موعد الري المقترح',
+          chart: 'منحنى NDVI لآخر القراءات',
+          alerts: 'التنبيهات الميدانية',
+          noAlerts: 'لا توجد تنبيهات على هذا الحقل.'
+        }
+      : {
+          notFound: 'Field not found.',
+          export: 'Export Field Report',
+          latest: 'Latest NDVI',
+          avg: 'Average NDVI',
+          humidity: 'Humidity',
+          plan: 'Irrigation recommendation',
+          chart: 'NDVI trend for latest readings',
+          alerts: 'Field Alerts',
+          noAlerts: 'No alerts for this field.'
+        };
+
+  if (!field) return <section>{copy.notFound}</section>;
 
   const fieldAlerts = alerts.filter((alert) => alert.fieldId === field.id);
   const latestNdvi = field.ndviSeries.at(-1)?.value ?? 0;
@@ -29,24 +63,24 @@ export default function FieldDetailsPage({ params }: { params: { fieldId: string
             {field.areaHa} هكتار • آخر تحديث NDVI: {field.ndviSeries.at(-1)?.date}
           </p>
         </div>
-        <Button type="button">تصدير تقرير الحقل</Button>
+        <Button type="button">{copy.export}</Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">Latest NDVI</p>
+          <p className="text-xs text-slate-400">{copy.latest}</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">{latestNdvi.toFixed(2)}</p>
         </Panel>
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">متوسط NDVI</p>
+          <p className="text-xs text-slate-400">{copy.avg}</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{avgNdvi.toFixed(2)}</p>
         </Panel>
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">رطوبة الهواء</p>
+          <p className="text-xs text-slate-400">{copy.humidity}</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{field.weatherToday.humidity}%</p>
         </Panel>
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">موعد الري المقترح</p>
+          <p className="text-xs text-slate-400">{copy.plan}</p>
           <p className="mt-2 text-3xl font-black text-amber-300">{field.irrigationToday.recommendedMm} مم</p>
         </Panel>
       </div>
@@ -57,12 +91,12 @@ export default function FieldDetailsPage({ params }: { params: { fieldId: string
 
       <div className="grid gap-4 xl:grid-cols-3">
         <Panel as="article" className="p-5 xl:col-span-2">
-          <h2 className="mb-3 text-lg font-black text-slate-100">منحنى NDVI لآخر القراءات</h2>
+          <h2 className="mb-3 text-lg font-black text-slate-100">{copy.chart}</h2>
           <NdviChart data={field.ndviSeries} />
         </Panel>
 
         <Panel as="article" className="p-5">
-          <h2 className="mb-3 text-lg font-black text-slate-100">التنبيهات الميدانية</h2>
+          <h2 className="mb-3 text-lg font-black text-slate-100">{copy.alerts}</h2>
           <div className="space-y-3">
             {fieldAlerts.length ? (
               fieldAlerts.map((alert) => (
@@ -72,7 +106,7 @@ export default function FieldDetailsPage({ params }: { params: { fieldId: string
                 </Card>
               ))
             ) : (
-              <p className="text-sm text-slate-400">لا توجد تنبيهات على هذا الحقل.</p>
+              <p className="text-sm text-slate-400">{copy.noAlerts}</p>
             )}
           </div>
         </Panel>

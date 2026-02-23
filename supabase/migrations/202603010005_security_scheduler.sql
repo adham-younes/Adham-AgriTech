@@ -1,37 +1,69 @@
-create extension if not exists pg_cron;
-create extension if not exists pg_net;
-create extension if not exists supabase_vault;
+-- Security and operations hardening
+-- 1) lock helper function search_path
+-- 2) provide a rerunnable cron setup function for post-secret bootstrap
 
--- This script mirrors the scheduling logic implemented in:
--- supabase/migrations/202603010003_production_readiness.sql
--- and expects these secrets (Vault or app.settings fallback):
--- - adham_functions_base_url / app.settings.supabase_functions_base_url
--- - adham_service_role_key / app.settings.service_role_key
--- - adham_cron_secret / app.settings.cron_secret (optional)
+create or replace function public.is_org_member(target_org uuid)
+returns boolean
+language sql
+stable
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.organization_members m
+    where m.org_id = target_org and m.user_id = auth.uid()
+  );
+$$;
 
-do $cron$
+create or replace function public.can_manage_article()
+returns boolean
+language sql
+stable
+set search_path = public
+as $$
+  select coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin', false);
+$$;
+
+create or replace function public.configure_adham_cron_jobs()
+returns jsonb
+language plpgsql
+security definer
+set search_path = public, vault, pg_catalog
+as $$
 declare
   base_url text;
   service_key text;
   cron_secret text;
+  headers_value jsonb := jsonb_build_object('Content-Type', 'application/json');
   headers_json text;
-  headers_value jsonb;
+  scheduled text[] := '{}';
 begin
+  if not exists (select 1 from pg_extension where extname = 'pg_cron') then
+    return jsonb_build_object('ok', false, 'reason', 'missing_pg_cron');
+  end if;
+
+  if not exists (select 1 from pg_extension where extname = 'pg_net') then
+    return jsonb_build_object('ok', false, 'reason', 'missing_pg_net');
+  end if;
+
   base_url := public.read_secret('adham_functions_base_url', 'app.settings.supabase_functions_base_url');
   service_key := public.read_secret('adham_service_role_key', 'app.settings.service_role_key');
   cron_secret := public.read_secret('adham_cron_secret', 'app.settings.cron_secret');
 
-  if base_url is null or service_key is null then
-    raise exception 'Missing Supabase function base URL or service key for cron configuration';
+  if base_url is null or length(base_url) = 0 then
+    return jsonb_build_object('ok', false, 'reason', 'missing_base_url');
   end if;
 
-  headers_value := jsonb_build_object(
-    'Content-Type', 'application/json',
-    'Authorization', 'Bearer ' || service_key
-  );
+  if service_key is not null and length(service_key) > 0 then
+    headers_value := headers_value || jsonb_build_object('Authorization', 'Bearer ' || service_key);
+  end if;
 
   if cron_secret is not null and length(cron_secret) > 0 then
     headers_value := headers_value || jsonb_build_object('x-cron-secret', cron_secret);
+  end if;
+
+  if not (headers_value ? 'Authorization') and not (headers_value ? 'x-cron-secret') then
+    return jsonb_build_object('ok', false, 'reason', 'missing_auth_material');
   end if;
 
   headers_json := headers_value::text;
@@ -39,12 +71,15 @@ begin
   if exists (select 1 from cron.job where jobname = 'daily-weather-job') then
     perform cron.unschedule('daily-weather-job');
   end if;
+
   if exists (select 1 from cron.job where jobname = 'weekly-ndvi-job') then
     perform cron.unschedule('weekly-ndvi-job');
   end if;
+
   if exists (select 1 from cron.job where jobname = 'monthly-report-job') then
     perform cron.unschedule('monthly-report-job');
   end if;
+
   if exists (select 1 from cron.job where jobname = 'system-health-job') then
     perform cron.unschedule('system-health-job');
   end if;
@@ -62,6 +97,7 @@ begin
       headers_json
     )
   );
+  scheduled := array_append(scheduled, 'daily-weather-job');
 
   perform cron.schedule(
     'weekly-ndvi-job',
@@ -80,6 +116,7 @@ begin
       headers_json
     )
   );
+  scheduled := array_append(scheduled, 'weekly-ndvi-job');
 
   perform cron.schedule(
     'monthly-report-job',
@@ -88,12 +125,16 @@ begin
       $job$select net.http_post(
         url := %L,
         headers := %L::jsonb,
-        body := jsonb_build_object('mode','batch','month',date_trunc('month', current_date)::date::text)
+        body := jsonb_build_object(
+          'mode','batch',
+          'month',date_trunc('month', current_date)::date::text
+        )
       );$job$,
       base_url || '/generate-report-monthly',
       headers_json
     )
   );
+  scheduled := array_append(scheduled, 'monthly-report-job');
 
   perform cron.schedule(
     'system-health-job',
@@ -108,5 +149,13 @@ begin
       headers_json
     )
   );
-end
-$cron$;
+  scheduled := array_append(scheduled, 'system-health-job');
+
+  return jsonb_build_object('ok', true, 'scheduled', scheduled);
+end;
+$$;
+
+revoke all on function public.configure_adham_cron_jobs() from public;
+grant execute on function public.configure_adham_cron_jobs() to service_role;
+
+select public.configure_adham_cron_jobs();

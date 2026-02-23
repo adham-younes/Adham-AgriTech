@@ -1,16 +1,49 @@
 import Link from 'next/link';
 import { MapPreview } from '@/components/maps/map-preview';
 import { fields, farms } from '@/lib/demo-data';
+import { addLangParam, AppSearchParams, localeFromSearchParams, resolveSearchParams } from '@/lib/i18n';
 import { Badge } from '@/components/ui/badge';
 import { ButtonLink } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Panel } from '@/components/ui/panel';
 
-export default function FarmDetailsPage({ params }: { params: { farmId: string } }) {
-  const farm = farms.find((item) => item.id === params.farmId);
-  const farmFields = fields.filter((item) => item.farmId === params.farmId);
+export default async function FarmDetailsPage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ farmId: string }>;
+  searchParams?: Promise<AppSearchParams>;
+}) {
+  const resolvedParams = await params;
+  const locale = localeFromSearchParams(await resolveSearchParams(searchParams));
+  const farm = farms.find((item) => item.id === resolvedParams.farmId);
+  const farmFields = fields.filter((item) => item.farmId === resolvedParams.farmId);
+  const copy =
+    locale === 'ar'
+      ? {
+          notFound: 'المزرعة غير موجودة.',
+          subtitle: 'متابعة مباشرة للحقول، المؤشرات، والتوصيات اليومية.',
+          back: 'العودة لإدارة المزارع',
+          fields: 'عدد الحقول',
+          area: 'المساحة الإجمالية',
+          avgNdvi: 'متوسط NDVI الحالي',
+          irrigation: 'توصية الري',
+          temp: 'درجة الحرارة',
+          openField: 'فتح شاشة الحقل'
+        }
+      : {
+          notFound: 'Farm not found.',
+          subtitle: 'Live tracking for fields, indicators, and daily recommendations.',
+          back: 'Back to farms',
+          fields: 'Fields',
+          area: 'Total area',
+          avgNdvi: 'Current avg NDVI',
+          irrigation: 'Irrigation',
+          temp: 'Temperature',
+          openField: 'Open field view'
+        };
 
-  if (!farm) return <section>المزرعة غير موجودة.</section>;
+  if (!farm) return <section>{copy.notFound}</section>;
 
   const totalArea = farmFields.reduce((sum, field) => sum + field.areaHa, 0);
   const avgNdvi =
@@ -22,24 +55,24 @@ export default function FarmDetailsPage({ params }: { params: { farmId: string }
         <div>
           <Badge>{farm.governorate}</Badge>
           <h1 className="mt-2 text-3xl font-black">{farm.name}</h1>
-          <p className="mt-1 text-sm text-slate-400">متابعة مباشرة للحقول، المؤشرات، والتوصيات اليومية.</p>
+          <p className="mt-1 text-sm text-slate-400">{copy.subtitle}</p>
         </div>
-        <ButtonLink href="/app/farms" variant="outline">
-          العودة لإدارة المزارع
+        <ButtonLink href={addLangParam('/app/farms', locale)} variant="outline">
+          {copy.back}
         </ButtonLink>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">عدد الحقول</p>
+          <p className="text-xs text-slate-400">{copy.fields}</p>
           <p className="mt-2 text-3xl font-black text-emerald-300">{farmFields.length}</p>
         </Panel>
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">المساحة الإجمالية</p>
+          <p className="text-xs text-slate-400">{copy.area}</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{totalArea.toFixed(1)} ha</p>
         </Panel>
         <Panel as="article" className="p-5">
-          <p className="text-xs text-slate-400">متوسط NDVI الحالي</p>
+          <p className="text-xs text-slate-400">{copy.avgNdvi}</p>
           <p className="mt-2 text-3xl font-black text-slate-100">{avgNdvi.toFixed(2)}</p>
         </Panel>
       </div>
@@ -65,17 +98,17 @@ export default function FarmDetailsPage({ params }: { params: { farmId: string }
 
               <div className="mb-4 grid grid-cols-2 gap-3 text-sm">
                 <Card className="bg-black/20 p-3">
-                  <p className="text-slate-400">توصية الري</p>
+                  <p className="text-slate-400">{copy.irrigation}</p>
                   <p className="mt-1 font-black text-slate-100">{field.irrigationToday.recommendedMm} مم</p>
                 </Card>
                 <Card className="bg-black/20 p-3">
-                  <p className="text-slate-400">درجة الحرارة</p>
+                  <p className="text-slate-400">{copy.temp}</p>
                   <p className="mt-1 font-black text-slate-100">{field.weatherToday.tempC}°</p>
                 </Card>
               </div>
 
-              <Link href={`/app/fields/${field.id}`} className="text-sm font-black text-emerald-300 hover:text-emerald-200">
-                فتح شاشة الحقل
+              <Link href={addLangParam(`/app/fields/${field.id}`, locale)} className="text-sm font-black text-emerald-300 hover:text-emerald-200">
+                {copy.openField}
               </Link>
             </Panel>
           );

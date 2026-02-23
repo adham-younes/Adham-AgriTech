@@ -1,9 +1,11 @@
 # Architecture
 
-- Next.js App Router يستهلك Supabase عبر Server Components.
+- Next.js App Router يستهلك Supabase عبر Server Components مع واجهات تشغيلية هجينة (Realtime data + demo fallback لبعض الشاشات).
 - Supabase Edge Functions مسؤولة عن التكامل مع APIs الخارجية.
 - pg_cron + pg_net لتشغيل الوظائف المجدولة يوميًا/أسبوعيًا/شهريًا.
 - الجداول `weather_snapshots_daily` و `satellite_ndvi_timeseries` تستخدم كـ cache دائم.
+- مسار المشاركة العامة للتقارير `/r/[publicToken]` يقرأ من `public.public_reports`.
+- دعم لغتين (`ar`, `en`) عبر query param `lang` مع cookie middleware.
 
 ## DB Performance Notes
 
